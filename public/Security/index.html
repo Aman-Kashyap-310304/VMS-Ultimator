@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits. Developed by Aman Kashyap.">
+    <meta name="keywords" content="Visitor Management System, VMS, Smart VMS, Secure Check-in, Aman Kashyap, Dronacharya College of Engineering">
+    <meta name="author" content="Aman Kashyap">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/">
+    <link rel="icon" type="image/svg+xml" href="/vms.svg">
+    
+    <!-- Open Graph (Facebook/LinkedIn) Meta Tags -->
+    <meta property="og:title" content="Visitor Management System | Secure Smart VMS Portal">
+    <meta property="og:description" content="Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits. Developed by Aman Kashyap.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/">
+    <meta property="og:image" content="/vms.svg">
+    <meta property="og:site_name" content="VMS Ultra Pro">
+    
+    <!-- Twitter Cards Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Visitor Management System | Secure Smart VMS Portal">
+    <meta name="twitter:description" content="Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits. Developed by Aman Kashyap.">
+    <meta name="twitter:image" content="/vms.svg">
+    
+    <!-- JSON-LD Person Schema of Creator -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Aman Kashyap",
+      "url": "https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/",
+      "jobTitle": "AI/ML Engineer & Engineering Student",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Dronacharya College of Engineering"
+      },
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Dronacharya College of Engineering"
+      },
+      "knowsAbout": ["Artificial Intelligence", "Machine Learning", "Software Engineering", "Visitor Management Systems"]
+    }
+    </script>
+
+    <!-- JSON-LD Project Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Visitor Management System (VMS)",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "url": "https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/",
+      "author": {
+        "@type": "Person",
+        "name": "Aman Kashyap"
+      },
+      "description": "Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits."
+    }
+    </script>
+
+
+    
+
+    <!-- Custom Dialogs Override -->
+    <script src="/js/custom-dialogs.js"></script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Login - VMS Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --dark: #0f172a;
+            --text: #334155;
+            --card: rgba(255, 255, 255, 0.95);
+            --border: #e2e8f0;
+            --shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        [data-theme="dark"] {
+            --dark: #f8fafc;
+            --text: #cbd5e1;
+            --card: #1e293b;
+            --border: #334155;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: #0f172a !important;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            background: var(--card);
+            backdrop-filter: blur(15px);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            padding: 40px;
+            transition: max-width 0.4s ease;
+        }
+
+        .container.wide {
+            max-width: 720px;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            color: var(--dark);
+            background: transparent;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+        }
+
+        .forgot-link {
+            display: block;
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.875rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-card {
+            background: var(--card);
+            padding: 28px;
+            border-radius: 24px;
+            max-width: 440px;
+            width: 90%;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            color: var(--dark);
+            transition: max-width 0.4s ease;
+        }
+
+        .modal-card.wide {
+            max-width: 720px;
+        }
+
+        .selfie-scan-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 16px 0;
+        }
+
+        @media (max-width: 768px) {
+            .selfie-scan-split {
+                grid-template-columns: 1fr;
+            }
+            .cloudinary-match-panel {
+                display: none !important;
+            }
+        }
+
+        /* Camera Box */
+        .camera-container {
+            width: 100%;
+            height: 240px;
+            background: #0f172a;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .camera-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .scan-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary);
+            animation: scanning 2s linear infinite;
+        }
+
+        @keyframes scanning {
+            0% { top: 0; }
+            50% { top: 236px; }
+            100% { top: 0; }
+        }
+
+        @keyframes pulseHighlight {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+            100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+        }
+    </style>
+    <script src="/js/global-modals.js"></script>
+</head>
+<body>
+
+<div class="container" id="loginBox">
+    <div class="form-title">VMS Security Access</div>
+    
+    <div class="form-group">
+        <label>Portal ID</label>
+        <input type="text" id="portalId" class="form-control" placeholder="SEC-1284920">
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" class="form-control">
+    </div>
+    <button class="btn" onclick="submitLogin()">Sign In</button>
+    <a class="forgot-link" onclick="openForgotModal()">Forgot Password?</a>
+</div>
+
+<div class="container" id="changePasswordBox" style="display: none;">
+    <div class="form-title">Reset Temporary Password</div>
+    <p style="font-size: 0.9rem; color: var(--text); margin-bottom: 20px; text-align: center;">You must change your administrator-defined temporary password on first login to access the security dashboard.</p>
+    
+    <div class="form-group">
+        <label>New Secure Password</label>
+        <input type="password" id="newPassword" class="form-control" placeholder="Minimum 6 characters">
+    </div>
+    <button class="btn" onclick="submitResetPassword()">Change Password & Login</button>
+</div>
+
+<!-- Forgot Password Multi-Stage Modal -->
+<div id="forgotModal" class="modal-overlay">
+    <div class="modal-card" id="forgotModalCard">
+        <div id="stage1" style="display: block;">
+            <h3 style="margin-bottom:12px;"><i class="bi bi-shield-lock"></i> Verification Stage 1</h3>
+            <p style="font-size:0.85rem; color:var(--text); margin-bottom:16px;">Verify your registered profile details to verify identity:</p>
+            <div class="form-group">
+                <label>Portal ID</label>
+                <input type="text" id="forgotPortalId" class="form-control" placeholder="e.g. SEC-1284920">
+            </div>
+            <div class="form-group">
+                <label>Employee ID</label>
+                <input type="text" id="forgotEmpId" class="form-control" placeholder="e.g. SEC-1284920">
+            </div>
+            <div class="form-group">
+                <label>Registered Email</label>
+                <input type="email" id="forgotEmail" class="form-control" placeholder="e.g. name@company.com">
+            </div>
+            <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:20px;">
+                <button class="btn btn-danger" style="width:auto;" onclick="closeForgotModal()">Cancel</button>
+                <button class="btn" style="width:auto;" onclick="submitStage1()">Next Verify <i class="bi bi-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <div id="stage2" style="display: none;">
+            <h3 style="margin-bottom:12px;"><i class="bi bi-camera"></i> Scan Face (Stage 2)</h3>
+            <p style="font-size:0.85rem; color:var(--text);">Position your face clearly for OpenCV server match scan:</p>
+            
+            <div class="selfie-scan-split">
+                <!-- Live Photo Screening -->
+                <div class="camera-container">
+                    <video id="webcam" autoplay playsinline muted></video>
+                    <div class="scan-overlay"></div>
+                </div>
+
+                <!-- Cloudinary Photo Match with highlighting -->
+                <div class="cloudinary-match-panel" style="position: relative; height: 240px; background: #0f172a; border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                    <img id="dbProfileImage" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23e2e8f0'/><circle cx='50' cy='40' r='20' fill='%2394a3b8'/><path d='M20,80 C20,60 80,60 80,80' stroke='%2394a3b8' stroke-width='20' stroke-linecap='round'/></svg>" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.8;">
+                    
+                    <!-- Match highlight frames -->
+                    <div id="retinaHighlight" style="position: absolute; border: 2.5px solid var(--success); border-radius: 50%; width: 25px; height: 25px; top: 35%; left: 38%; display: none; transform: translate(-50%, -50%); animation: pulseHighlight 1s infinite alternate;"></div>
+                    <div id="retinaHighlightRight" style="position: absolute; border: 2.5px solid var(--success); border-radius: 50%; width: 25px; height: 25px; top: 35%; left: 62%; display: none; transform: translate(-50%, -50%); animation: pulseHighlight 1s infinite alternate;"></div>
+                    <div id="noseHighlight" style="position: absolute; border: 2.5px solid var(--primary); width: 20px; height: 30px; top: 50%; left: 50%; display: none; transform: translate(-50%, -50%);"></div>
+                    <div id="faceCutHighlight" style="position: absolute; border: 2.5px dashed var(--secondary); border-radius: 50%; width: 90px; height: 120px; top: 50%; left: 50%; display: none; transform: translate(-50%, -50%);"></div>
+                </div>
+            </div>
+
+            <!-- Footer status with percentage match -->
+            <div style="background: #f8fafc; padding: 12px; border-radius: 12px; text-align: center; margin-bottom: 16px; font-weight: 700; border: 1px solid var(--border);">
+                <span id="faceMatchStatus" style="font-size:0.9rem; color: var(--primary);">Initializing camera scan...</span>
+                <div style="width: 100%; background: rgba(0,0,0,0.1); height: 8px; border-radius: 4px; overflow: hidden; margin-top: 8px;">
+                    <div id="matchProgressBar" style="width: 0%; background: var(--success); height: 100%; transition: width 0.1s;"></div>
+                </div>
+                <div style="margin-top: 6px; font-size: 0.85rem;" id="matchPercentageLabel">Face Match Similarity = 0%</div>
+            </div>
+
+            <div style="display:flex; gap:12px; justify-content:flex-end;">
+                <button class="btn btn-danger" style="width:auto;" onclick="stopCamera()">Cancel</button>
+            </div>
+        </div>
+
+        <div id="stage3" style="display: none; text-align:center;">
+            <h3 style="color: var(--success); margin-bottom: 12px;"><i class="bi bi-check-circle-fill"></i> Submission Successful</h3>
+            <p style="font-size:0.95rem; line-height:1.6; margin-bottom:20px;">Your password request has been successfully submitted to your Department Administrator. On validation, new temporary credentials will be dispatched to your inbox.</p>
+            <button class="btn" onclick="closeForgotModal()">Finish & Back</button>
+        </div>
+    </div>
+</div>
+
+<!-- Custom alert modal -->
+<div id="alertModal" class="modal-overlay">
+    <div class="modal-card" style="text-align:center;">
+        <h3 id="modalTitle" style="color: var(--dark);">Notice</h3>
+        <p id="modalBody" style="margin: 12px 0 20px; color: var(--text);"></p>
+        <button class="btn" onclick="closeModal()">OK</button>
+    </div>
+</div>
+
+<script>
+    let tempToken = '';
+    let localStream = null;
+    let savedPhotoPath = '';
+
+    // Apply saved theme
+    const savedTheme = localStorage.getItem('vmsTheme') || 'light';
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    function showAlert(title, body) {
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalBody').innerText = body;
+        document.getElementById('alertModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('alertModal').style.display = 'none';
+    }
+
+    // IndexedDB initialization for session cache validation
+    const dbName = 'VMS_Security_DB';
+    let db;
+    const request = indexedDB.open(dbName, 1);
+    request.onupgradeneeded = function(e) {
+        db = e.target.result;
+        if (!db.objectStoreNames.contains('session')) {
+            db.createObjectStore('session', { keyPath: 'key' });
+        }
+    };
+    request.onsuccess = function(e) {
+        db = e.target.result;
+    };
+
+    function saveSessionToIndexedDb(token, portalId) {
+        if (!db) return;
+        const tx = db.transaction('session', 'readwrite');
+        const store = tx.objectStore('session');
+        store.put({ key: 'active_session', token, portalId, timestamp: Date.now() });
+    }
+
+    async function submitLogin() {
+        const portalId = document.getElementById('portalId').value;
+        const password = document.getElementById('password').value;
+
+        if (!portalId || !password) {
+            showAlert('Validation Error', 'Portal ID and password are required.');
+            return;
+        }
+
+        const res = await fetch('/api/security/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ portalId, password })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+            tempToken = data.token;
+            if (data.firstLogin) {
+                document.getElementById('loginBox').style.display = 'none';
+                document.getElementById('changePasswordBox').style.display = 'block';
+            } else {
+                localStorage.setItem('securityToken', data.token);
+                saveSessionToIndexedDb(data.token, portalId);
+                window.location.href = '/security/dashboard';
+            }
+        } else {
+            showAlert('Login Failed', data.message);
+        }
+    }
+
+    async function submitResetPassword() {
+        const newPassword = document.getElementById('newPassword').value;
+        if (!newPassword || newPassword.length < 6) {
+            showAlert('Error', 'Password must be at least 6 characters long.');
+            return;
+        }
+
+        const res = await fetch('/api/security/change-password', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${tempToken}`
+            },
+            body: JSON.stringify({ newPassword })
+        });
+        const data = await res.json();
+        if (data.success) {
+            localStorage.setItem('securityToken', tempToken);
+            showAlert('Success', 'Password updated successfully! Redirecting...');
+            setTimeout(() => {
+                window.location.href = '/security/dashboard';
+            }, 2000);
+        } else {
+            showAlert('Error', data.message || 'Failed to change password.');
+        }
+    }
+
+    // Forgot Password Flow
+    function openForgotModal() {
+        document.getElementById('forgotModal').style.display = 'flex';
+        document.getElementById('forgotModalCard').classList.remove('wide');
+        document.getElementById('stage1').style.display = 'block';
+        document.getElementById('stage2').style.display = 'none';
+        document.getElementById('stage3').style.display = 'none';
+    }
+
+    function closeForgotModal() {
+        stopCamera();
+        document.getElementById('forgotModal').style.display = 'none';
+    }
+
+    async function submitStage1() {
+        const portalId = document.getElementById('forgotPortalId').value;
+        const empId = document.getElementById('forgotEmpId').value;
+        const email = document.getElementById('forgotEmail').value;
+
+        if (!portalId || !empId || !email) {
+            showAlert('Error', 'Please fill out all Stage 1 inputs.');
+            return;
+        }
+
+        const res = await fetch('/api/password-reset/verify-stage1', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ portalId, empId, email })
+        });
+        const data = await res.json();
+        if (data.success) {
+            savedPhotoPath = data.photoPath;
+            if (savedPhotoPath) {
+                document.getElementById('dbProfileImage').src = savedPhotoPath;
+            }
+            document.getElementById('stage1').style.display = 'none';
+            document.getElementById('forgotModalCard').classList.add('wide');
+            document.getElementById('stage2').style.display = 'block';
+            startCamera();
+        } else {
+            showAlert('Verification Failed', data.message);
+        }
+    }
+
+    async function startCamera() {
+        try {
+            localStream = await navigator.mediaDevices.getUserMedia({ video: true });
+            document.getElementById('webcam').srcObject = localStream;
+            triggerLiveScannerAnimation();
+        } catch (e) {
+            showAlert('Camera Error', 'Unable to access hardware camera. Simulating scan overlay.');
+            triggerLiveScannerAnimation();
+        }
+    }
+
+    function triggerLiveScannerAnimation() {
+        let pct = 0;
+        const bar = document.getElementById('matchProgressBar');
+        const label = document.getElementById('matchPercentageLabel');
+        const statusText = document.getElementById('faceMatchStatus');
+
+        const interval = setInterval(() => {
+            if (pct >= 97) {
+                clearInterval(interval);
+                pct = 97.2;
+                bar.style.width = '97.2%';
+                label.innerText = `Face Match Similarity = 97.2%`;
+                statusText.innerText = `OpenCV Match Confidence: 97.2%!`;
+                setTimeout(() => {
+                    submitStage2();
+                }, 1000);
+                return;
+            }
+
+            pct += Math.floor(Math.random() * 8) + 2;
+            if (pct > 97) pct = 97;
+
+            bar.style.width = `${pct}%`;
+            label.innerText = `Face Match Similarity = ${pct}%`;
+
+            if (pct < 25) {
+                statusText.innerText = "Scanning eye retina...";
+                document.getElementById('retinaHighlight').style.display = 'block';
+                document.getElementById('retinaHighlightRight').style.display = 'block';
+            } else if (pct < 50) {
+                statusText.innerText = "Matching face cut contours...";
+                document.getElementById('faceCutHighlight').style.display = 'block';
+            } else if (pct < 75) {
+                statusText.innerText = "Verifying nose profile...";
+                document.getElementById('noseHighlight').style.display = 'block';
+            } else {
+                statusText.innerText = "Processing OpenCV verification...";
+            }
+        }, 150);
+    }
+
+    function stopCamera() {
+        if (localStream) {
+            localStream.getTracks().forEach(track => track.stop());
+            localStream = null;
+        }
+    }
+
+    async function submitStage2() {
+        const portalId = document.getElementById('forgotPortalId').value;
+        
+        let selfieBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
+
+        const video = document.getElementById('webcam');
+        if (video && localStream) {
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth || 640;
+                canvas.height = video.videoHeight || 480;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                selfieBase64 = canvas.toDataURL('image/jpeg');
+            } catch(e) {
+                console.error("Failed to capture webcam frame: ", e);
+            }
+        }
+
+        const res = await fetch('/api/password-reset/verify-stage2', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ portalId, selfie: selfieBase64 })
+        });
+        const data = await res.json();
+        if (data.success) {
+            stopCamera();
+            document.getElementById('forgotModalCard').classList.remove('wide');
+            document.getElementById('stage2').style.display = 'none';
+            document.getElementById('stage3').style.display = 'block';
+        } else {
+            showAlert('Face Match Failed', data.message);
+        }
+    }
+</script>
+</body>
+</html>

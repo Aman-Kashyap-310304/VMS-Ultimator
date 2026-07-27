@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits. Developed by Aman Kashyap.">
+    <meta name="keywords" content="Visitor Management System, VMS, Smart VMS, Secure Check-in, Aman Kashyap, Dronacharya College of Engineering">
+    <meta name="author" content="Aman Kashyap">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/">
+    <link rel="icon" type="image/svg+xml" href="/vms.svg">
+    
+    <!-- Open Graph (Facebook/LinkedIn) Meta Tags -->
+    <meta property="og:title" content="Visitor Management System | Secure Smart VMS Portal">
+    <meta property="og:description" content="Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits. Developed by Aman Kashyap.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/">
+    <meta property="og:image" content="/vms.svg">
+    <meta property="og:site_name" content="VMS Ultra Pro">
+    
+    <!-- Twitter Cards Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Visitor Management System | Secure Smart VMS Portal">
+    <meta name="twitter:description" content="Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits. Developed by Aman Kashyap.">
+    <meta name="twitter:image" content="/vms.svg">
+    
+    <!-- JSON-LD Person Schema of Creator -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Aman Kashyap",
+      "url": "https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/",
+      "jobTitle": "AI/ML Engineer & Engineering Student",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Dronacharya College of Engineering"
+      },
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Dronacharya College of Engineering"
+      },
+      "knowsAbout": ["Artificial Intelligence", "Machine Learning", "Software Engineering", "Visitor Management Systems"]
+    }
+    </script>
+
+    <!-- JSON-LD Project Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Visitor Management System (VMS)",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "url": "https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/",
+      "author": {
+        "@type": "Person",
+        "name": "Aman Kashyap"
+      },
+      "description": "Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits."
+    }
+    </script>
+
+
+    
+
+    <!-- Custom Dialogs Override -->
+    <script src="/js/custom-dialogs.js"></script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - VMS Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --dark: #0f172a;
+            --text: #334155;
+            --card: rgba(255, 255, 255, 0.95);
+            --border: #e2e8f0;
+            --shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f1f5f9, #eff6ff);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            background: var(--card);
+            backdrop-filter: blur(15px);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 40px;
+            position: relative;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            color: var(--dark);
+            background: #fff;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+        }
+
+        /* CUSTOM MODAL ALERT */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-card {
+            background: #fff;
+            padding: 24px;
+            border-radius: 20px;
+            max-width: 360px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .modal-card h3 {
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .modal-card p {
+            font-size: 0.9rem;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+    </style>
+    <script src="/js/global-modals.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-title">VMS Admin Sign In</div>
+    
+    <!-- Sign In form -->
+    <div id="loginFormSection">
+        <div class="form-group">
+            <label>Admin Email</label>
+            <input type="email" id="email" class="form-control" placeholder="admin@example.com">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password" class="form-control">
+        </div>
+        <button class="btn btn-primary" onclick="submitLogin()">Sign In</button>
+        <div style="text-align: center; margin-top: 16px;">
+            <a href="#" onclick="showForgot()" style="color: var(--primary); text-decoration: none; font-size: 0.875rem; font-weight: 600;">Forgot Password?</a>
+        </div>
+    </div>
+
+    <!-- Password Recovery Section -->
+    <div id="forgotSection" style="display: none;">
+        <div style="font-size: 0.9rem; margin-bottom: 20px; color: #64748b;">
+            Verify administrative email to reveal password.
+        </div>
+        <div id="forgotStep1">
+            <div class="form-group">
+                <label>Admin Email</label>
+                <input type="email" id="forgotEmail" class="form-control" placeholder="admin@example.com">
+            </div>
+            <button class="btn btn-primary" onclick="requestOtp()">Send OTP Code</button>
+        </div>
+        <div id="forgotStep2" style="display: none;">
+            <div class="form-group">
+                <label>Verification OTP</label>
+                <input type="text" id="forgotOtp" class="form-control" maxlength="6" style="text-align: center; letter-spacing: 4px; font-size: 1.25rem;">
+            </div>
+            <button class="btn btn-primary" onclick="verifyRecoveryOtp()">Verify & Reveal Password</button>
+        </div>
+        <div style="text-align: center; margin-top: 16px;">
+            <a href="#" onclick="showLogin()" style="color: var(--primary); text-decoration: none; font-size: 0.875rem; font-weight: 600;">Back to Login</a>
+        </div>
+    </div>
+</div>
+
+<!-- Custom alert modal -->
+<div id="alertModal" class="modal-overlay">
+    <div class="modal-card">
+        <h3 id="modalTitle">Notice</h3>
+        <p id="modalBody"></p>
+        <button class="btn btn-primary" onclick="closeModal()">OK</button>
+    </div>
+</div>
+
+<script>
+    function showAlert(title, body) {
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalBody').innerText = body;
+        document.getElementById('alertModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('alertModal').style.display = 'none';
+    }
+
+    function showForgot() {
+        document.getElementById('loginFormSection').style.display = 'none';
+        document.getElementById('forgotSection').style.display = 'block';
+    }
+
+    function showLogin() {
+        document.getElementById('loginFormSection').style.display = 'block';
+        document.getElementById('forgotSection').style.display = 'none';
+    }
+
+    async function submitLogin() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        const res = await fetch('/api/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (data.success) {
+            localStorage.setItem('adminToken', data.token);
+            window.location.href = '/admin/dashboard';
+        } else {
+            showAlert('Login Error', data.message || 'Invalid credentials.');
+        }
+    }
+
+    async function requestOtp() {
+        const email = document.getElementById('forgotEmail').value;
+        const res = await fetch('/api/admin/forgot-password-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (data.success) {
+            document.getElementById('forgotStep1').style.display = 'none';
+            document.getElementById('forgotStep2').style.display = 'block';
+            showAlert('OTP Sent', 'OTP sent to administrative mailbox.');
+        } else {
+            showAlert('Error', data.message || 'Failed to send OTP.');
+        }
+    }
+
+    async function verifyRecoveryOtp() {
+        const email = document.getElementById('forgotEmail').value;
+        const otp = document.getElementById('forgotOtp').value;
+
+        const res = await fetch('/api/admin/reveal-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, otp })
+        });
+        const data = await res.json();
+        if (data.success) {
+            showAlert('Administrative Password', 'Your Password is: ' + data.password);
+            showLogin();
+        } else {
+            showAlert('Error', data.message || 'OTP verification failed.');
+        }
+    }
+</script>
+</body>
+</html>

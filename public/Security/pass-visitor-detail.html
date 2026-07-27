@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits. Developed by Aman Kashyap.">
+    <meta name="keywords" content="Visitor Management System, VMS, Smart VMS, Secure Check-in, Aman Kashyap, Dronacharya College of Engineering">
+    <meta name="author" content="Aman Kashyap">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/">
+    <link rel="icon" type="image/svg+xml" href="/vms.svg">
+    
+    <!-- Open Graph (Facebook/LinkedIn) Meta Tags -->
+    <meta property="og:title" content="Visitor Management System | Secure Smart VMS Portal">
+    <meta property="og:description" content="Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits. Developed by Aman Kashyap.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/">
+    <meta property="og:image" content="/vms.svg">
+    <meta property="og:site_name" content="VMS Ultra Pro">
+    
+    <!-- Twitter Cards Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Visitor Management System | Secure Smart VMS Portal">
+    <meta name="twitter:description" content="Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits. Developed by Aman Kashyap.">
+    <meta name="twitter:image" content="/vms.svg">
+    
+    <!-- JSON-LD Person Schema of Creator -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Aman Kashyap",
+      "url": "https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/",
+      "jobTitle": "AI/ML Engineer & Engineering Student",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Dronacharya College of Engineering"
+      },
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Dronacharya College of Engineering"
+      },
+      "knowsAbout": ["Artificial Intelligence", "Machine Learning", "Software Engineering", "Visitor Management Systems"]
+    }
+    </script>
+
+    <!-- JSON-LD Project Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Visitor Management System (VMS)",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "url": "https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/",
+      "author": {
+        "@type": "Person",
+        "name": "Aman Kashyap"
+      },
+      "description": "Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits."
+    }
+    </script>
+
+
+    
+
+    <!-- Custom Dialogs Override -->
+    <script src="/js/custom-dialogs.js"></script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Pass Detail - VMS</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --success: #16a34a;
+            --dark: #0f172a;
+            --text: #334155;
+            --card: #ffffff;
+            --border: #cbd5e1;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] {
+            --dark: #f8fafc;
+            --text: #e2e8f0;
+            --card: #1e293b;
+            --border: #475569;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            background: #0f172a !important;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: #f8fafc;
+            color: var(--text);
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: var(--card);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            padding: 40px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            border-bottom: 1.5px solid var(--border);
+            padding-bottom: 16px;
+        }
+
+        .header h2 {
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .detail-rowstrong {
+            color: var(--dark);
+        }
+
+        .media-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .media-box {
+            text-align: center;
+        }
+
+        .media-box label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .media-box img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 2px solid var(--border);
+        }
+    </style>
+    <script src="/js/global-modals.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>Visitor Pass Details</h2>
+        <a href="/security/dashboard" class="btn"><i class="bi bi-arrow-left"></i> Back to Console</a>
+    </div>
+
+    <div id="passDetails" style="margin-top: 16px;">
+        <div class="detail-row">
+            <span><strong>Pass ID / Number:</strong></span>
+            <span id="detPassId">-</span>
+        </div>
+        <div class="detail-row">
+            <span><strong>Visitor Name:</strong></span>
+            <span id="detVisitorName">-</span>
+        </div>
+        <div class="detail-row">
+            <span><strong>Email Address:</strong></span>
+            <span id="detEmail">-</span>
+        </div>
+        <div class="detail-row">
+            <span><strong>Contact Number:</strong></span>
+            <span id="detContact">-</span>
+        </div>
+        <div class="detail-row">
+            <span><strong>Company Name:</strong></span>
+            <span id="detCompany">-</span>
+        </div>
+        <div class="detail-row">
+            <span><strong>Designation:</strong></span>
+            <span id="detDesignation">-</span>
+        </div>
+        <div class="detail-row">
+            <span><strong>Purpose of Visit:</strong></span>
+            <span id="detPurpose">-</span>
+        </div>
+        <div class="detail-row">
+            <span><strong>Host Employee:</strong></span>
+            <span id="detHostName">-</span>
+        </div>
+        <div class="detail-row">
+            <span><strong>Host Department:</strong></span>
+            <span id="detHostDept">-</span>
+        </div>
+        <div class="detail-row">
+            <span><strong>Visit Date & Time:</strong></span>
+            <span id="detVisitTime">-</span>
+        </div>
+        <div class="detail-row">
+            <span><strong>Check-In Time:</strong></span>
+            <span id="detCheckIn">-</span>
+        </div>
+        <div class="detail-row">
+            <span><strong>Check-Out Time:</strong></span>
+            <span id="detCheckOut">-</span>
+        </div>
+    </div>
+
+    <div class="media-container">
+        <div class="media-box">
+            <label>Visitor Photograph</label>
+            <img id="visitorPhotoImg" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23e2e8f0'/><circle cx='50' cy='40' r='20' fill='%2394a3b8'/><path d='M20,80 C20,60 80,60 80,80' stroke='%2394a3b8' stroke-width='20' stroke-linecap='round'/></svg>" alt="Visitor Photo">
+        </div>
+        <div class="media-box">
+            <label>Identity Document Proof</label>
+            <img id="identityProofImg" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100' height='100' rx='10' fill='%23e2e8f0'/><text x='20' y='55' fill='%2394a3b8' font-size='12' font-family='sans-serif'>ID Proof Image</text></svg>" alt="ID Proof Image">
+        </div>
+    </div>
+</div>
+
+<script>
+    const token = localStorage.getItem('securityToken');
+    if (!token) {
+        window.location.href = '/security';
+    }
+
+    // Apply Theme
+    const savedTheme = localStorage.getItem('vmsTheme') || 'light';
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    // Parse URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const passId = urlParams.get('pass_id');
+
+    async function loadPassDetail() {
+        if (!passId) return;
+
+        const res = await fetch(`/api/security/pass/${passId}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (data.success) {
+            const v = data.visitor;
+            document.getElementById('detPassId').innerText = v.pass_number;
+            document.getElementById('detVisitorName').innerText = v.full_name;
+            document.getElementById('detEmail').innerText = v.email;
+            document.getElementById('detContact').innerText = v.contact_number || 'N/A';
+            document.getElementById('detCompany').innerText = v.company_name || 'N/A';
+            document.getElementById('detDesignation').innerText = v.designation || 'N/A';
+            document.getElementById('detPurpose').innerText = v.purpose || 'N/A';
+            document.getElementById('detHostName').innerText = v.host_employee_name;
+            document.getElementById('detHostDept').innerText = v.host_department;
+            document.getElementById('detVisitTime').innerText = `${v.visit_date} - ${v.visit_time}`;
+            document.getElementById('detCheckIn').innerText = v.check_in_time ? new Date(v.check_in_time).toLocaleString() : 'Not Checked In';
+            document.getElementById('detCheckOut').innerText = v.check_out_time ? new Date(v.check_out_time).toLocaleString() : 'Not Checked Out';
+
+            if (v.photo_path) {
+                document.getElementById('visitorPhotoImg').src = v.photo_path;
+            }
+            if (v.identity_proof_path) {
+                document.getElementById('identityProofImg').src = v.identity_proof_path;
+            }
+        }
+    }
+
+    loadPassDetail();
+</script>
+</body>
+</html>
