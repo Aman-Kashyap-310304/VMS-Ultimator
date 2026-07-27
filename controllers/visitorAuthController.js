@@ -171,7 +171,12 @@ exports.registerVisitor = async (req, res) => {
             { expiresIn: '2d' }
         );
 
-        res.cookie('visitor_token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+        res.cookie('visitor_token', token, { 
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            maxAge: 2 * 24 * 60 * 60 * 1000  // 2 days in ms
+        });
 
         return res.status(201).json({
             success: true,
@@ -224,7 +229,12 @@ exports.loginVisitor = async (req, res) => {
             { expiresIn: '2d' }
         );
 
-        res.cookie('visitor_token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+        res.cookie('visitor_token', token, { 
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            maxAge: 2 * 24 * 60 * 60 * 1000  // 2 days in ms
+        });
 
         return res.json({
             success: true,

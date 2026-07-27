@@ -4,7 +4,7 @@ const router = express.Router();
 const securityAuthController = require('../controllers/securityAuthController');
 
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: require('os').tmpdir() });
 const validateSecuritySession = require('../middlewares/validateSecuritySession');
 
 router.post('/login', securityAuthController.loginSecurity);

@@ -7,7 +7,7 @@ const deptAdminAuthController = require('../controllers/deptAdminAuthController'
 const deptAdminVisitorController = require('../controllers/deptAdminVisitorController');
 const validateDeptAdminSession = require('../middlewares/validateDeptAdminSession');
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: require('os').tmpdir() });
 const adminVisitorController = require('../controllers/adminVisitorController');
 
 // Auth

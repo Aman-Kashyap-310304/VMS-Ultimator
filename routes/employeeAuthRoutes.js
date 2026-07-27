@@ -4,7 +4,7 @@ const router = express.Router();
 const employeeAuthController = require('../controllers/employeeAuthController');
 
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: require('os').tmpdir() });
 const validateEmployeeSession = require('../middlewares/validateEmployeeSession');
 
 router.post('/login', employeeAuthController.loginEmployee);

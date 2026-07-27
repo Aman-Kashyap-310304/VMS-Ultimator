@@ -9,12 +9,21 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 
 const app = express();
+app.set('trust proxy', 1);
 
 // ======================================================
 // BASIC MIDDLEWARES
 // ======================================================
 
-app.use(cors());
+app.use(cors({
+    origin: [
+        'http://localhost:3000',
+        'https://vms-ultimator.onrender.com'
+    ],
+    credentials: true,
+    methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+    allowedHeaders: ['Content-Type','Authorization']
+}));
 
 app.use(express.json());
 

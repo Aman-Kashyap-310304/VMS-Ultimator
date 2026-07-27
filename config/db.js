@@ -20,12 +20,18 @@ async function initDb() {
         await connection.end();
         console.log(`✅ Database "${dbName}" checked/created successfully`);
 
-        pool = mysql.createPool({
-            ...dbConfig,
-            database: dbName,
+        const pool = mysql2.createPool({
+            host:     process.env.DB_HOST,
+            port:     Number(process.env.DB_PORT) || 3306,
+            user:     process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME || 'defaultdb',
             waitForConnections: true,
             connectionLimit: 10,
-            queueLimit: 0
+            queueLimit: 0,
+            ssl: {
+                rejectUnauthorized: false   // ← Add this for Aiven
+            }
         });
 
         const poolConn = await pool.getConnection();

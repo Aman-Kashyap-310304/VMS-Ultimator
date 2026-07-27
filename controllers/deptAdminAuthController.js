@@ -85,7 +85,12 @@ exports.loginDeptAdmin = async (req, res) => {
             { expiresIn: '3d' }
         );
 
-        res.cookie('deptadmin_token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 3 * 24 * 60 * 60 * 1000 });
+        res.cookie('deptadmin_token', token, { 
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === 'production', 
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            maxAge: 3 * 24 * 60 * 60 * 1000 
+        });
 
         return res.json({
             success: true,

@@ -20,7 +20,7 @@ router.put('/departments/:dept_code', validateAdminSession, adminVisitorControll
 router.delete('/departments/:dept_code', validateAdminSession, adminVisitorController.deleteDepartment);
 
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: require('os').tmpdir() });
 
 // DeptAdmins
 router.post('/create-dept-admin', validateAdminSession, upload.single('photo'), adminVisitorController.createDeptAdmin);
