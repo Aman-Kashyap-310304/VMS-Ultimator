@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits. Developed by Aman Kashyap.">
+    <meta name="keywords" content="Visitor Management System, VMS, Smart VMS, Secure Check-in, Aman Kashyap, Dronacharya College of Engineering">
+    <meta name="author" content="Aman Kashyap">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/">
+    <link rel="icon" type="image/svg+xml" href="/vms.svg">
+    
+    <!-- Open Graph (Facebook/LinkedIn) Meta Tags -->
+    <meta property="og:title" content="Visitor Management System | Secure Smart VMS Portal">
+    <meta property="og:description" content="Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits. Developed by Aman Kashyap.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/">
+    <meta property="og:image" content="/vms.svg">
+    <meta property="og:site_name" content="VMS Ultra Pro">
+    
+    <!-- Twitter Cards Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Visitor Management System | Secure Smart VMS Portal">
+    <meta name="twitter:description" content="Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits. Developed by Aman Kashyap.">
+    <meta name="twitter:image" content="/vms.svg">
+    
+    <!-- JSON-LD Person Schema of Creator -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Aman Kashyap",
+      "url": "https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/",
+      "jobTitle": "AI/ML Engineer & Engineering Student",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Dronacharya College of Engineering"
+      },
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Dronacharya College of Engineering"
+      },
+      "knowsAbout": ["Artificial Intelligence", "Machine Learning", "Software Engineering", "Visitor Management Systems"]
+    }
+    </script>
+
+    <!-- JSON-LD Project Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Visitor Management System (VMS)",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "url": "https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/",
+      "author": {
+        "@type": "Person",
+        "name": "Aman Kashyap"
+      },
+      "description": "Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits."
+    }
+    </script>
+
+
+    
+
+    <!-- Custom Dialogs Override -->
+    <script src="/js/custom-dialogs.js"></script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Access - VMS Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --dark: #0f172a;
+            --text: #334155;
+            --card: rgba(255, 255, 255, 0.95);
+            --border: #e2e8f0;
+            --shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #eff6ff, #faf5ff);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+            background: var(--card);
+            backdrop-filter: blur(20px);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 18px;
+            background: none;
+            border: none;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            background: rgba(37, 99, 235, 0.04);
+        }
+
+        .form-container {
+            padding: 36px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            color: var(--dark);
+            background: #fff;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+        }
+
+        .wizard-step {
+            display: none;
+        }
+
+        .wizard-step.active {
+            display: block;
+        }
+
+        .wizard-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 28px;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background: var(--primary);
+            transform: scale(1.3);
+        }
+
+        .ocr-loading {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.875rem;
+            color: var(--primary);
+            margin-top: 8px;
+            font-weight: 600;
+        }
+    </style>
+    <script src="/js/global-modals.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('signup')">Sign Up</button>
+        <button class="tab-btn" onclick="switchTab('signin')">Sign In</button>
+    </div>
+
+    <div class="form-container">
+        <!-- SIGN UP WIZARD -->
+        <div id="signupSection">
+            <div class="step-indicator">
+                <div class="dot active" id="dot1"></div>
+                <div class="dot" id="dot2"></div>
+                <div class="dot" id="dot3"></div>
+                <div class="dot" id="dot4"></div>
+            </div>
+
+            <!-- Stage 1: Personal Info & Uploads -->
+            <div class="wizard-step active" id="step1">
+                <div class="form-group">
+                    <label>Full Name (*)</label>
+                    <input type="text" id="regName" class="form-control" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address (*)</label>
+                    <input type="email" id="regEmail" class="form-control" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Contact Number</label>
+                    <input type="text" id="regContact" class="form-control" placeholder="+1234567890">
+                </div>
+                <div class="form-group">
+                    <label>Profile Photo (*) <span style="color: var(--danger); font-size:0.75rem;">(Compulsory)</span></label>
+                    <input type="file" id="regPhoto" class="form-control" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label>Identity Card Proof <span style="color: var(--primary); font-size:0.75rem;">(Optional - Auto-Fills Stage 2 via OCR)</span></label>
+                    <input type="file" id="regIdProof" class="form-control" accept="image/*" onchange="runOcrScan()">
+                    <div id="ocrLoading" class="ocr-loading">
+                        <i class="bi bi-arrow-repeat spin" style="display:inline-block; animation: spin 1.5s linear infinite;"></i>
+                        Extracting details from identity card...
+                    </div>
+                </div>
+                <div class="wizard-nav">
+                    <div></div>
+                    <button class="btn btn-primary" onclick="goToStep(2)" style="width: auto; padding: 12px 24px;">Next</button>
+                </div>
+            </div>
+
+            <!-- Stage 2: Identity & Company Details -->
+            <div class="wizard-step" id="step2">
+                <div class="form-group">
+                    <label>Identity Document Type</label>
+                    <input type="text" id="regIdType" class="form-control" placeholder="Aadhaar / PAN">
+                </div>
+                <div class="form-group">
+                    <label>Identity Document Number</label>
+                    <input type="text" id="regIdNumber" class="form-control" placeholder="Identity Number">
+                </div>
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" id="regCompany" class="form-control" placeholder="Acme Corp">
+                </div>
+                <div class="form-group">
+                    <label>Designation</label>
+                    <input type="text" id="regDesignation" class="form-control" placeholder="Manager">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="regConfirmPassword" class="form-control">
+                </div>
+                <div class="wizard-nav">
+                    <button class="btn btn-primary" onclick="goToStep(1)" style="background: #e2e8f0; color: var(--dark); width: auto;">Back</button>
+                    <button class="btn btn-primary" onclick="requestOtp()" style="width: auto;">Send OTP</button>
+                </div>
+            </div>
+
+            <!-- Stage 3: OTP Verification -->
+            <div class="wizard-step" id="step3">
+                <div class="form-group">
+                    <label>Enter 6-Digit Email OTP</label>
+                    <input type="text" id="regOtp" class="form-control" maxlength="6" style="text-align: center; letter-spacing: 4px; font-size: 1.25rem;">
+                </div>
+                <div class="wizard-nav">
+                    <button class="btn btn-primary" onclick="goToStep(2)" style="background: #e2e8f0; color: var(--dark); width: auto;">Back</button>
+                    <button class="btn btn-primary" onclick="goToStep(4)" style="width: auto;">Verify</button>
+                </div>
+            </div>
+
+            <!-- Stage 4: Consent -->
+            <div class="wizard-step" id="step4">
+                <div style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 24px;">
+                    <h3 style="margin-bottom: 12px; color: var(--dark);">Visitor Safety & Policy Agreement</h3>
+                    <p>By registering, you confirm the details provided are correct and consent to the organization's policies, safety codes, and digital sign-in/out tracking logs.</p>
+                </div>
+                <button class="btn btn-primary" onclick="submitRegister()">Submit & Create Account</button>
+            </div>
+        </div>
+
+        <!-- SIGN IN -->
+        <div id="signinSection" style="display: none;">
+            <div class="form-group">
+                <label>8-Digit Visitor ID</label>
+                <input type="text" id="loginId" class="form-control" placeholder="12345678" maxlength="8">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" class="form-control">
+            </div>
+            <button class="btn btn-primary" onclick="submitLogin()">Sign In</button>
+            <div style="text-align: center; margin-top: 16px;">
+                <a href="#" onclick="showForgotPassword()" style="color: var(--primary); text-decoration: none; font-size: 0.875rem; font-weight: 600;">Forgot Password?</a>
+            </div>
+        </div>
+
+        <!-- FORGOT PASSWORD SECTION -->
+        <div id="forgotSection" style="display: none;">
+            <div class="form-title" style="font-size: 1.25rem;">Reset Account Password</div>
+            <div id="forgotStep1">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="forgotName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="forgotEmail" class="form-control">
+                </div>
+                <button class="btn btn-primary" onclick="sendForgotPasswordOtp()">Send OTP</button>
+            </div>
+            <div id="forgotStep2" style="display: none;">
+                <div class="form-group">
+                    <label>Enter 6-Digit OTP</label>
+                    <input type="text" id="forgotOtp" class="form-control" maxlength="6">
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" id="forgotNewPassword" class="form-control">
+                </div>
+                <button class="btn btn-primary" onclick="submitResetPassword()">Verify & Reset Password</button>
+            </div>
+            <div style="text-align: center; margin-top: 16px;">
+                <a href="#" onclick="switchTab('signin')" style="color: var(--primary); text-decoration: none; font-size: 0.875rem; font-weight: 600;">Back to Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+<!-- Custom alert modal -->
+<div id="alertModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.4); backdrop-filter:blur(4px); align-items:center; justify-content:center; z-index:1000;">
+    <div style="background:#fff; padding:24px; border-radius:20px; max-width:360px; width:90%; text-align:center; box-shadow:0 10px 25px rgba(0,0,0,0.1);">
+        <h3 id="modalTitle" style="color:var(--dark);">Notice</h3>
+        <p id="modalBody" style="margin:12px 0 20px; font-size:0.9rem; color:var(--text);"></p>
+        <button class="btn btn-primary" style="width:100%;" onclick="closeModal()">OK</button>
+    </div>
+</div>
+
+<script>
+    let currentStep = 1;
+
+    function showAlert(title, message) {
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalBody').innerText = message;
+        document.getElementById('alertModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('alertModal').style.display = 'none';
+    }
+
+    function switchTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('forgotSection').style.display = 'none';
+        if (tab === 'signup') {
+            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+            document.getElementById('signupSection').style.display = 'block';
+            document.getElementById('signinSection').style.display = 'none';
+        } else {
+            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+            document.getElementById('signupSection').style.display = 'none';
+            document.getElementById('signinSection').style.display = 'block';
+        }
+    }
+
+    function goToStep(step) {
+        document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+        document.getElementById(`step${step}`).classList.add('active');
+        document.getElementById(`dot${step}`).classList.add('active');
+        currentStep = step;
+    }
+
+    async function runOcrScan() {
+        const fileInput = document.getElementById('regIdProof');
+        if (!fileInput.files.length) return;
+
+        document.getElementById('ocrLoading').style.display = 'flex';
+        const formData = new FormData();
+        formData.append('identityProof', fileInput.files[0]);
+
+        try {
+            const res = await fetch('/api/visitor/ocr', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('regIdType').value = data.data.identityType || '';
+                document.getElementById('regIdNumber').value = data.data.identityNumber || '';
+                showAlert('OCR Analysis', 'OCR match completed successfully! Details auto-filled on next step.');
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            document.getElementById('ocrLoading').style.display = 'none';
+        }
+    }
+
+    async function requestOtp() {
+        const email = document.getElementById('regEmail').value;
+        const name = document.getElementById('regName').value;
+        const contact = document.getElementById('regContact').value;
+
+        if (!email || !name) {
+            showAlert('Validation Error', 'Name and email are required.');
+            return;
+        }
+
+        const res = await fetch('/api/visitor/register-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, full_name: name, contact_number: contact })
+        });
+        const data = await res.json();
+        if (data.success) {
+            goToStep(3);
+        } else {
+            showAlert('OTP Delivery Failed', data.message || 'OTP delivery failed.');
+        }
+    }
+
+    async function submitRegister() {
+        const formData = new FormData();
+        formData.append('full_name', document.getElementById('regName').value);
+        formData.append('email', document.getElementById('regEmail').value);
+        formData.append('contact_number', document.getElementById('regContact').value);
+        formData.append('identity_type', document.getElementById('regIdType').value);
+        formData.append('identity_number', document.getElementById('regIdNumber').value);
+        formData.append('company_name', document.getElementById('regCompany').value);
+        formData.append('designation', document.getElementById('regDesignation').value);
+        formData.append('password', document.getElementById('regPassword').value);
+        formData.append('otp', document.getElementById('regOtp').value);
+        formData.append('photo', document.getElementById('regPhoto').files[0]);
+        if (document.getElementById('regIdProof').files.length) {
+            formData.append('identityProof', document.getElementById('regIdProof').files[0]);
+        }
+
+        const res = await fetch('/api/visitor/register', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await res.json();
+        if (data.success) {
+            localStorage.setItem('visitorToken', data.token);
+            showAlert('Welcome', 'Welcome! Your 8-Digit Visitor ID is: ' + data.visitorId);
+            setTimeout(() => {
+                window.location.href = '/visitor/dashbaord.html';
+            }, 3000);
+        } else {
+            showAlert('Registration Failed', 'Registration failed: ' + data.message);
+        }
+    }
+
+    async function submitLogin() {
+        const visitorId = document.getElementById('loginId').value;
+        const password = document.getElementById('loginPassword').value;
+
+        const res = await fetch('/api/visitor/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ visitorId, password })
+        });
+        const data = await res.json();
+        if (data.success) {
+            localStorage.setItem('visitorToken', data.token);
+            window.location.href = '/visitor/dashbaord.html';
+        } else {
+            showAlert('Login Failed', 'Login failed: ' + data.message);
+        }
+    }
+
+    function showForgotPassword() {
+        document.getElementById('signupSection').style.display = 'none';
+        document.getElementById('signinSection').style.display = 'none';
+        document.getElementById('forgotSection').style.display = 'block';
+    }
+
+    async function sendForgotPasswordOtp() {
+        const name = document.getElementById('forgotName').value;
+        const email = document.getElementById('forgotEmail').value;
+
+        const res = await fetch('/api/visitor/forgot-password-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email })
+        });
+        const data = await res.json();
+        if (data.success) {
+            document.getElementById('forgotStep1').style.display = 'none';
+            document.getElementById('forgotStep2').style.display = 'block';
+            showAlert('Verification Code', 'OTP sent to your email.');
+        } else {
+            showAlert('Verification Failed', data.message || 'Verification failed.');
+        }
+    }
+
+    async function submitResetPassword() {
+        const email = document.getElementById('forgotEmail').value;
+        const otp = document.getElementById('forgotOtp').value;
+        const newPassword = document.getElementById('forgotNewPassword').value;
+
+        const res = await fetch('/api/visitor/reset-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, otp, newPassword })
+        });
+        const data = await res.json();
+        if (data.success) {
+            showAlert('Success', 'Password reset successfully! Please login.');
+            switchTab('signin');
+        } else {
+            showAlert('Error', data.message || 'Reset failed.');
+        }
+    }
+</script>
+</body>
+</html>
