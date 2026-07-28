@@ -20,7 +20,7 @@ async function initDb() {
         await connection.end();
         console.log(`✅ Database "${dbName}" checked/created successfully`);
 
-        const pool = mysql2.createPool({
+        const pool = mysql.createPool({
             host:     process.env.DB_HOST,
             port:     Number(process.env.DB_PORT) || 3306,
             user:     process.env.DB_USER,
