@@ -1,6 +1,23 @@
 // controllers/aiController.js
 const axios = require('axios');
 
+async function callGeminiWithFallback(reqData, apiKey) {
+    // Try gemini-3.5-flash first, then fallback to gemini-flash-latest
+    const models = ['gemini-3.5-flash', 'gemini-flash-latest'];
+    let lastError = null;
+    for (const model of models) {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        try {
+            const response = await axios.post(url, reqData);
+            return response.data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        } catch (err) {
+            console.warn(`[Gemini Fallback] Model ${model} failed:`, err.response?.data?.error?.message || err.message);
+            lastError = err;
+        }
+    }
+    throw lastError || new Error('All Gemini models failed');
+}
+
 exports.generateContent = async (req, res) => {
     try {
         const { action, payload } = req.body;
@@ -186,8 +203,7 @@ Formatting rules (MANDATORY):
                 contents.push({ role: 'user', parts: [{ text: userMessage }] });
 
                 // Call Gemini with system instruction + multi-turn
-                const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                const response = await axios.post(geminiUrl, {
+                const reqData = {
                     system_instruction: { parts: [{ text: systemContext }] },
                     contents,
                     generationConfig: {
@@ -196,9 +212,8 @@ Formatting rules (MANDATORY):
                         topP: 0.95,
                         maxOutputTokens: isLongQuery ? 1024 : 400
                     }
-                });
-
-                const generatedText = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                };
+                const generatedText = await callGeminiWithFallback(reqData, apiKey);
                 return res.json({ success: true, text: generatedText.trim() });
             }
 
@@ -220,8 +235,7 @@ Formatting rules (MANDATORY):
         const enhancedPrompt = `${prompt}\n\n[FORMATTING INSTRUCTION] ${wordTarget} Use **bold** for key terms, bullet points for lists, and ### headings for sections if the response has multiple parts.`;
 
         // Call Gemini API
-        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-        const response = await axios.post(geminiUrl, {
+        const reqData = {
             contents: [{ parts: [{ text: enhancedPrompt }] }],
             generationConfig: {
                 temperature: 0.7,
@@ -229,9 +243,8 @@ Formatting rules (MANDATORY):
                 topP: 0.95,
                 maxOutputTokens: isDetailedPrompt ? 1024 : 512
             }
-        });
-
-        const generatedText = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        };
+        const generatedText = await callGeminiWithFallback(reqData, apiKey);
         return res.json({ success: true, text: generatedText.trim() });
 
     } catch (err) {
