@@ -91,6 +91,10 @@ app.use(
     '/api/deptadmin',
     require('./routes/deptAdminRoutes')
 );
+app.use(
+    '/api/ai',
+    require('./routes/aiRoutes')
+);
 
 // ======================================================
 // FRONTEND ROUTES
