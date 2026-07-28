@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.95"/>
+      <stop offset="100%" style="stop-color:#e0e7ff;stop-opacity:0.85"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="30" fill="url(#bgGrad)"/>
+  <!-- Shield shape -->
+  <path d="M32 10 L48 18 L48 34 C48 44 40 51 32 54 C24 51 16 44 16 34 L16 18 Z" fill="url(#shieldGrad)" opacity="0.95"/>
+  <!-- V letter -->
+  <text x="32" y="40" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="900" fill="#1e40af">V</text>
+  <!-- Small MS text -->
+  <text x="32" y="50" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="7" font-weight="700" fill="#1e40af" letter-spacing="1">VMS</text>
+</svg>

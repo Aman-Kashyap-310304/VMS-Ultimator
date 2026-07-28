@@ -5,8 +5,10 @@ services:
     buildCommand: npm install
     startCommand: node server.js
     healthCheckPath: /health
+    autoDeploy: true
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 3000
+      # All other env vars (DB credentials, JWT_SECRET, BREVO_API_KEY, CLOUDINARY_*, GEMINI_API_KEY, ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_NAME)
+      # must be set manually in the Render Dashboard → Environment tab
+      # DO NOT store secrets in this file

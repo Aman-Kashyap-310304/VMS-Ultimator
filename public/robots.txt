@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+Allow: /visitor
+Allow: /admin
+Allow: /deptadmin
+Allow: /employee
+Allow: /security
+Allow: /health
+
+Disallow: /api/
+Disallow: /uploads/
+Disallow: /svg/
+Disallow: /admin/dashboard
+Disallow: /deptadmin/dashboard
+Disallow: /employee/dashboard
+Disallow: /security/dashboard
+
+Sitemap: https://vms-ultimator.onrender.com/sitemap.xml

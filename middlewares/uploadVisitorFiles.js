@@ -1,13 +1,10 @@
 // middlewares/uploadVisitorFiles.js
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
+const os = require('os');
 
-// Ensure temp directory exists
-const uploadDir = path.join(__dirname, '../uploads/temp');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
+// Use OS temp directory — works on Render, Heroku, Railway, and all cloud platforms
+const uploadDir = os.tmpdir();
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {

@@ -2,43 +2,37 @@
 const mysql = require('mysql2/promise');
 const bcrypt = require('bcrypt');
 
-const dbConfig = {
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '3306'),
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || ''
+// ─── Pool-level config (used for both connection test + pool creation) ───────
+const poolConfig = {
+    host:     process.env.DB_HOST     || 'localhost',
+    port:     Number(process.env.DB_PORT) || 3306,
+    user:     process.env.DB_USER     || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME     || 'defaultdb',
+    waitForConnections: true,
+    connectionLimit:    10,
+    queueLimit:         0,
+    ssl: {
+        // Required for Aiven managed MySQL over TLS
+        rejectUnauthorized: false
+    }
 };
 
-const dbName = process.env.DB_NAME || 'vms_ultra_pro_db';
-
+// Module-level pool — assigned once initDb() completes
 let pool;
 
 async function initDb() {
     try {
-        const connection = await mysql.createConnection(dbConfig);
-        await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``);
-        await connection.end();
-        console.log(`✅ Database "${dbName}" checked/created successfully`);
-
-        const pool = mysql.createPool({
-            host:     process.env.DB_HOST,
-            port:     Number(process.env.DB_PORT) || 3306,
-            user:     process.env.DB_USER,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_NAME || 'defaultdb',
-            waitForConnections: true,
-            connectionLimit: 10,
-            queueLimit: 0,
-            ssl: {
-                rejectUnauthorized: false   // ← Add this for Aiven
-            }
-        });
+        // Assign to the MODULE-LEVEL pool variable (no const/let here)
+        pool = mysql.createPool(poolConfig);
 
         const poolConn = await pool.getConnection();
         console.log('✅ Connected to MySQL Database successfully');
-        
+        poolConn.release();
+
+        // Use pool.query() for all table migrations (pool manages connections internally)
         // Create departments table
-        await poolConn.query(`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS departments (
                 dept_code VARCHAR(50) PRIMARY KEY,
                 dept_name VARCHAR(255) NOT NULL,
@@ -50,7 +44,7 @@ async function initDb() {
         `);
 
         // Create visitors table (Added is_blocked and blocked_reason columns)
-        await poolConn.query(`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS visitors (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 visitor_id VARCHAR(50) UNIQUE NOT NULL,
@@ -74,11 +68,11 @@ async function initDb() {
 
         // Add column blocked_reason if not exists
         try {
-            await poolConn.query("ALTER TABLE visitors ADD COLUMN blocked_reason TEXT");
+            await pool.query("ALTER TABLE visitors ADD COLUMN blocked_reason TEXT");
         } catch(e) {}
 
         // Create visitor_passes table (Added status enum structure)
-        await poolConn.query(`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS visitor_passes (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 visitor_id INT NOT NULL,
@@ -98,15 +92,15 @@ async function initDb() {
         `);
 
         try {
-            await poolConn.query("ALTER TABLE visitor_passes ADD COLUMN pass_pdf_url VARCHAR(500) NULL");
+            await pool.query("ALTER TABLE visitor_passes ADD COLUMN pass_pdf_url VARCHAR(500) NULL");
         } catch(e) {}
 
         try {
-            await poolConn.query("ALTER TABLE visitor_passes ADD COLUMN host_flagged_left_time DATETIME NULL");
+            await pool.query("ALTER TABLE visitor_passes ADD COLUMN host_flagged_left_time DATETIME NULL");
         } catch(e) {}
 
         // Create otps table
-        await poolConn.query(`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS otps (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 email VARCHAR(255) NOT NULL,
@@ -119,7 +113,7 @@ async function initDb() {
         `);
 
         // Create wrong_password_attempt table
-        await poolConn.query(`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS wrong_password_attempt (
                 alert_id INT AUTO_INCREMENT PRIMARY KEY,
                 portal_id VARCHAR(100),
@@ -135,7 +129,7 @@ async function initDb() {
         `);
 
         // Create deptAdmin table
-        await poolConn.query(`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS deptAdmin (
                 PortalId VARCHAR(100) PRIMARY KEY,
                 EmpId VARCHAR(100) UNIQUE NOT NULL,
@@ -154,7 +148,7 @@ async function initDb() {
         `);
 
         // Create users table (Employees & Security)
-        await poolConn.query(`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS users (
                 PortalId VARCHAR(100) PRIMARY KEY,
                 EmpId VARCHAR(100) UNIQUE NOT NULL,
@@ -172,27 +166,27 @@ async function initDb() {
         `);
 
         try {
-            await poolConn.query(`ALTER TABLE users ADD COLUMN is_first_login TINYINT DEFAULT 1`);
+            await pool.query(`ALTER TABLE users ADD COLUMN is_first_login TINYINT DEFAULT 1`);
         } catch (e) {}
         try {
-            await poolConn.query(`ALTER TABLE users ADD COLUMN is_blocked TINYINT DEFAULT 0`);
+            await pool.query(`ALTER TABLE users ADD COLUMN is_blocked TINYINT DEFAULT 0`);
         } catch (e) {}
         try {
-            await poolConn.query(`ALTER TABLE users ADD COLUMN blocked_reason VARCHAR(255)`);
+            await pool.query(`ALTER TABLE users ADD COLUMN blocked_reason VARCHAR(255)`);
         } catch (e) {}
 
         try {
-            await poolConn.query(`ALTER TABLE deptAdmin ADD COLUMN is_first_login TINYINT DEFAULT 1`);
+            await pool.query(`ALTER TABLE deptAdmin ADD COLUMN is_first_login TINYINT DEFAULT 1`);
         } catch (e) {}
         try {
-            await poolConn.query(`ALTER TABLE deptAdmin ADD COLUMN is_blocked TINYINT DEFAULT 0`);
+            await pool.query(`ALTER TABLE deptAdmin ADD COLUMN is_blocked TINYINT DEFAULT 0`);
         } catch (e) {}
         try {
-            await poolConn.query(`ALTER TABLE deptAdmin ADD COLUMN blocked_reason VARCHAR(255)`);
+            await pool.query(`ALTER TABLE deptAdmin ADD COLUMN blocked_reason VARCHAR(255)`);
         } catch (e) {}
 
         // Create schedules table
-        await poolConn.query(`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS schedules (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 portal_id VARCHAR(100) NOT NULL,
@@ -208,21 +202,21 @@ async function initDb() {
         `);
 
         try {
-            await poolConn.query(`ALTER TABLE schedules ADD COLUMN status VARCHAR(50) DEFAULT 'pending'`);
+            await pool.query(`ALTER TABLE schedules ADD COLUMN status VARCHAR(50) DEFAULT 'pending'`);
         } catch (e) {}
         try {
-            await poolConn.query(`ALTER TABLE schedules ADD COLUMN remarks TEXT`);
+            await pool.query(`ALTER TABLE schedules ADD COLUMN remarks TEXT`);
         } catch (e) {}
 
         try {
-            await poolConn.query(`ALTER TABLE deptAdmin ADD COLUMN is_blocked TINYINT DEFAULT 0`);
+            await pool.query(`ALTER TABLE deptAdmin ADD COLUMN is_blocked TINYINT DEFAULT 0`);
         } catch (e) {}
         try {
-            await poolConn.query(`ALTER TABLE deptAdmin ADD COLUMN blocked_reason VARCHAR(255)`);
+            await pool.query(`ALTER TABLE deptAdmin ADD COLUMN blocked_reason VARCHAR(255)`);
         } catch (e) {}
 
         // Create password_requests table
-        await poolConn.query(`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS password_requests (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 portal_id VARCHAR(100) NOT NULL,
@@ -235,7 +229,7 @@ async function initDb() {
         `);
 
         // Create visitor_profile_updates table
-        await poolConn.query(`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS visitor_profile_updates (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 visitor_id INT NOT NULL,
@@ -247,7 +241,7 @@ async function initDb() {
         `);
 
         // Create department_view_logs table
-        await poolConn.query(`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS department_view_logs (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 viewer_id VARCHAR(100) NOT NULL,
