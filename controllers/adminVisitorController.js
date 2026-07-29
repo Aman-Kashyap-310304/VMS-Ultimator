@@ -2,6 +2,7 @@
 const bcrypt = require('bcrypt');
 const db = require('../config/db');
 const sendEmail = require('../services/emailService');
+const getBaseUrl = require('../utils/baseUrl');
 
 exports.createDepartment = async (req, res) => {
     try {
@@ -99,7 +100,7 @@ exports.createDeptAdmin = async (req, res) => {
                     </div>
                     <p style="font-size: 0.85rem; color: #64748b; margin-top: 30px;">
                         If you are not interested in this role, click the link below to delete your account:<br>
-                        <a href="http://localhost:3000/api/admin/decline-dept-admin?portalId=${portalId}" style="color: #dc2626; text-decoration: none; font-weight: bold;">Decline & Delete Account</a>
+                        <a href="${getBaseUrl(req)}/api/admin/decline-dept-admin?portalId=${portalId}" style="color: #dc2626; text-decoration: none; font-weight: bold;">Decline & Delete Account</a>
                     </p>
                 </div>
             `

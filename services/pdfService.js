@@ -1,5 +1,6 @@
 const PDFDocument = require('pdfkit');
 const QRCode = require('qrcode');
+const getBaseUrl = require('../utils/baseUrl');
 const fs = require('fs');
 const path = require('path');
 
@@ -81,7 +82,8 @@ exports.generateVisitorPassPdf = async (passData) => {
                .text('1. Please present this pass along with a valid ID at the security desk upon arrival.\n2. Keep this pass visible at all times while inside the facility.\n3. Scan the QR code below at the scanner during check-in and check-out.', 60, 500, { lineGap: 4 });
 
             // Generate full redirect URL for normal scanners
-            const redirectUrl = `http://localhost:3000/visitor-pass.html?passNumber=${passData.pass_number}`;
+            const baseUrl = getBaseUrl();
+            const redirectUrl = `${baseUrl}/visitor-pass.html?passNumber=${passData.pass_number}`;
             const qrDataUrl = await QRCode.toDataURL(redirectUrl, { errorCorrectionLevel: 'H' });
             const qrImageBuffer = Buffer.from(qrDataUrl.replace(/^data:image\/\w+;base64,/, ""), 'base64');
             

@@ -16,10 +16,17 @@ app.set('trust proxy', 1);
 // ======================================================
 
 app.use(cors({
-    origin: [
-        'http://localhost:3000',
-        'https://vms-ultimator.onrender.com'
-    ],
+    origin: function(origin, callback) {
+        // Allow requests with no origin (like mobile apps, curl, or same-origin server requests)
+        if (!origin) return callback(null, true);
+        if (origin.includes('localhost') || 
+            origin.includes('127.0.0.1') || 
+            origin.includes('onrender.com') || 
+            origin.includes('github.io')) {
+            return callback(null, true);
+        }
+        return callback(null, true); // Allow cross-domain frontend clients
+    },
     credentials: true,
     methods: ['GET','POST','PUT','DELETE','OPTIONS'],
     allowedHeaders: ['Content-Type','Authorization']

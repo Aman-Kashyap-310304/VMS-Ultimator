@@ -1,6 +1,8 @@
 const emailLayout = require('./emailLayout');
+const getBaseUrl = require('../utils/baseUrl');
 
 module.exports = (visitor) => {
+const baseUrl = getBaseUrl();
 
 return emailLayout({
 
@@ -53,7 +55,7 @@ text-align:center;
 margin-top:30px;
 ">
 
-<a href="http://localhost:3000/Admins/dashboard.html"
+<a href="${baseUrl}/Admins/dashboard.html"
 style="
 background:#F59E0B;
 color:#ffffff;

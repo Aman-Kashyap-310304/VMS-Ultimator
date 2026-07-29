@@ -2,6 +2,7 @@
 const db = require('../config/db');
 const jwt = require('jsonwebtoken');
 const sendEmail = require('../services/emailService');
+const getBaseUrl = require('../utils/baseUrl');
 const newRequestTemplate = require('../templates/newRequestTemplate');
 
 exports.createVisitorRequest = async (req, res) => {
@@ -31,8 +32,9 @@ exports.createVisitorRequest = async (req, res) => {
                 { expiresIn: '7d' }
             );
 
-            const approveLink = `http://localhost:3000/api/public-action/approve?token=${actionToken}`;
-            const rejectLink = `http://localhost:3000/api/public-action/reject?token=${actionToken}`;
+            const baseUrl = getBaseUrl(req);
+            const approveLink = `${baseUrl}/api/public-action/approve?token=${actionToken}`;
+            const rejectLink = `${baseUrl}/api/public-action/reject?token=${actionToken}`;
 
             if (adminEmails.length) {
                 const emailHtml = `

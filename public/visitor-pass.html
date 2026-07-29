@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="/js/vms-backend-wakeup.js"></script>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits. Developed by Aman Kashyap.">
+    <meta name="keywords" content="Visitor Management System, VMS, Smart VMS, Secure Check-in, Aman Kashyap, Dronacharya College of Engineering">
+    <meta name="author" content="Aman Kashyap">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/">
+    <link rel="icon" type="image/svg+xml" href="/vms.svg">
+    
+    <!-- Open Graph (Facebook/LinkedIn) Meta Tags -->
+    <meta property="og:title" content="Visitor Management System | Secure Smart VMS Portal">
+    <meta property="og:description" content="Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits. Developed by Aman Kashyap.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/">
+    <meta property="og:image" content="/vms.svg">
+    <meta property="og:site_name" content="VMS Ultra Pro">
+    
+    <!-- Twitter Cards Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Visitor Management System | Secure Smart VMS Portal">
+    <meta name="twitter:description" content="Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits. Developed by Aman Kashyap.">
+    <meta name="twitter:image" content="/vms.svg">
+    
+    <!-- JSON-LD Person Schema of Creator -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Aman Kashyap",
+      "url": "https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/",
+      "jobTitle": "AI/ML Engineer & Engineering Student",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Dronacharya College of Engineering"
+      },
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Dronacharya College of Engineering"
+      },
+      "knowsAbout": ["Artificial Intelligence", "Machine Learning", "Software Engineering", "Visitor Management Systems"]
+    }
+    </script>
+
+    <!-- JSON-LD Project Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Visitor Management System (VMS)",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "url": "https://aman-kashyap-310304.github.io/Aman_Kashyap_Portfolio/",
+      "author": {
+        "@type": "Person",
+        "name": "Aman Kashyap"
+      },
+      "description": "Secure and Smart Visitor Management System (VMS) to register, schedule, and verify facility visits."
+    }
+    </script>
+
+
+    
+
+    <!-- Custom Dialogs Override -->
+    <script src="/js/custom-dialogs.js"></script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Pass - VMS</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --dark: #0f172a;
+            --text: #334155;
+            --border: #e2e8f0;
+            --shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8fafc, #eff6ff);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .pass-container {
+            width: 100%;
+            max-width: 460px;
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            padding: 28px;
+            text-align: center;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            color: #fff;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        /* Loading Spinner */
+        .spinner-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 40px 0;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0,0,0,0.1);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border-left-color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* CUSTOM ERROR VIEWS */
+        .error-view {
+            display: none;
+            text-align: center;
+        }
+
+        .error-code {
+            font-size: 6rem;
+            font-weight: 900;
+            color: var(--danger);
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+    </style>
+    <script src="/js/global-modals.js"></script>
+</head>
+<body>
+
+<!-- ERROR 403 INTERFACE -->
+<div id="error403" class="pass-container error-view">
+    <div class="error-code">403</div>
+    <h2 style="color: var(--dark); margin-bottom: 8px;">Access Denied</h2>
+    <p>You do not have permission to view this page. Invalid token or pass reference.</p>
+    <a href="/visitor" class="btn btn-primary"><i class="bi bi-house"></i> Home</a>
+</div>
+
+<!-- ERROR 501 INTERFACE -->
+<div id="error501" class="pass-container error-view">
+    <div class="error-code">501</div>
+    <h2 style="color: var(--dark); margin-bottom: 8px;">Not Found</h2>
+    <p>The requested access pass cannot be rendered.</p>
+    <a href="/visitor" class="btn btn-primary"><i class="bi bi-house"></i> Home</a>
+</div>
+
+<!-- VALID PASS VIEW -->
+<div id="passView" class="pass-container" style="display: none;">
+    <h2 style="color: var(--dark); margin-bottom: 16px;"><i class="bi bi-shield-check-fill" style="color: var(--success);"></i> Visitor Pass</h2>
+    
+    <div id="loadingSpinner" class="spinner-container">
+        <div class="spinner"></div>
+        <p>Loading Pass PDF...</p>
+    </div>
+
+    <canvas id="passCanvas" style="border: 1px solid #e2e8f0; border-radius: 16px; width: 100%; height: auto; display: none;"></canvas>
+    
+    <div class="btn-group">
+        <button class="btn btn-success" onclick="downloadPass()"><i class="bi bi-download"></i> Download Pass Image</button>
+        <button class="btn btn-primary" onclick="window.print()"><i class="bi bi-printer"></i> Print</button>
+    </div>
+</div>
+
+<script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const passNumber = urlParams.get('passNumber');
+
+    if (!passNumber) {
+        document.getElementById('error403').style.display = 'block';
+    } else if (passNumber.startsWith('REQ-')) {
+        document.getElementById('error501').style.display = 'block';
+    } else {
+        document.getElementById('passView').style.display = 'block';
+        fetchPassDetailsAndRender();
+    }
+
+    async function fetchPassDetailsAndRender() {
+        try {
+            // Check pass status and download PDF via proxy (CORS bypass)
+            const res = await fetch(`/api/public/pass/${passNumber}`);
+            const data = await res.json();
+            
+            if (data.success && data.pass.status === 'approved') {
+                const proxyPdfUrl = `/api/public/pass/${passNumber}/pdf`;
+                await loadPdfAndRender(proxyPdfUrl, data.pass);
+            } else {
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('error501').style.display = 'block';
+            }
+        } catch (e) {
+            console.error('Failed to load pass:', e);
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('error403').style.display = 'block';
+        }
+    }
+
+    async function loadPdfAndRender(pdfUrl, pass) {
+        try {
+            const loadingTask = pdfjsLib.getDocument(pdfUrl);
+            const pdf = await loadingTask.promise;
+            const page = await pdf.getPage(1);
+            
+            const scale = 2.0; // Render at high scale for maximum clarity
+            const viewport = page.getViewport({ scale: scale });
+
+            const canvas = document.getElementById('passCanvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            await page.render(renderContext).promise;
+
+            // Draw stamp watermark dynamically on top of the rendered PDF page canvas if checked out
+            if (pass && pass.check_out_time) {
+                context.save();
+                context.translate(canvas.width / 2, canvas.height / 2);
+                context.rotate(-Math.PI / 6); // 30 degrees angle counterclockwise
+                
+                context.fillStyle = 'rgba(220, 38, 38, 0.22)'; // Semi-transparent red stamp
+                context.font = 'bold 72px "Segoe UI", sans-serif';
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                
+                // Draw border box for stamp
+                context.strokeStyle = 'rgba(220, 38, 38, 0.32)';
+                context.lineWidth = 10;
+                context.strokeRect(-320, -60, 640, 120);
+                
+                context.fillText('VISIT COMPLETED', 0, 0);
+                context.restore();
+            }
+            
+            document.getElementById('loadingSpinner').style.display = 'none';
+            canvas.style.display = 'block';
+        } catch (e) {
+            console.error('PDF.js rendering error:', e);
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('error501').style.display = 'block';
+        }
+    }
+
+    function downloadPass() {
+        const canvas = document.getElementById('passCanvas');
+        const link = document.createElement('a');
+        link.download = `${passNumber}-pass.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }
+</script>
+</body>
+</html>
