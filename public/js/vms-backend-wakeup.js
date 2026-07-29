@@ -6,6 +6,7 @@
  * Features:
  * - Detects execution environment (Localhost vs Render vs GitHub Pages)
  * - Intercepts relative `/api/...` calls on GitHub Pages & redirects to Render Backend
+ * - Fixes static portal navigation links on GitHub Pages
  * - Pings `/health` on page load to spin up Render free tier if sleeping
  * - Displays a sleek, non-intrusive toast while Render is waking up
  * ============================================================
@@ -41,8 +42,36 @@
         return nativeFetch.call(this, url, init);
     };
 
+    // Fix absolute links when hosted on GitHub Pages
+    function fixGitHubPagesLinks() {
+        if (isSameHostBackend) return; // On Render/localhost, Express routes handle /admin, /visitor, etc.
+
+        // Detect GitHub Pages repository base (e.g. /VMS-Ultimator)
+        const pathSegments = window.location.pathname.split('/').filter(Boolean);
+        const repoBase = pathSegments.length > 0 && !pathSegments[0].endsWith('.html') ? '/' + pathSegments[0] : '';
+
+        document.querySelectorAll('a[href]').forEach(a => {
+            const href = a.getAttribute('href');
+            if (!href) return;
+
+            if (href === '/admin' || href === '/admin/') a.setAttribute('href', repoBase + '/public/Admins/index.html');
+            else if (href === '/visitor' || href === '/visitor/') a.setAttribute('href', repoBase + '/public/Visitor/index.html');
+            else if (href === '/deptadmin' || href === '/deptadmin/') a.setAttribute('href', repoBase + '/public/DeptAdmin/index.html');
+            else if (href === '/employee' || href === '/employee/') a.setAttribute('href', repoBase + '/public/Employee/index.html');
+            else if (href === '/security' || href === '/security/') a.setAttribute('href', repoBase + '/public/Security/index.html');
+            else if (href === '/admin/dashboard') a.setAttribute('href', repoBase + '/public/Admins/dashboard.html');
+            else if (href === '/deptadmin/dashboard') a.setAttribute('href', repoBase + '/public/DeptAdmin/dashbaord.html');
+            else if (href === '/employee/dashboard') a.setAttribute('href', repoBase + '/public/Employee/dashbaord.html');
+            else if (href === '/security/dashboard') a.setAttribute('href', repoBase + '/public/Security/dashboard.html');
+            else if (href === '/visitor/dashboard') a.setAttribute('href', repoBase + '/public/Visitor/dashbaord.html');
+            else if (href === '/' || href === '/index.html') a.setAttribute('href', repoBase + '/public/index.html');
+        });
+    }
+
     // Wakeup signal for Render backend
     function wakeupRender() {
+        fixGitHubPagesLinks();
+
         const healthEndpoint = (window.VMS_API_BASE || RENDER_BACKEND_URL) + '/health';
         let wakeupToast = null;
 

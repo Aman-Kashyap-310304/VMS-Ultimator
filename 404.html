@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VMS Ultra Pro — Smart Route Dispatcher</title>
+    <link rel="icon" type="image/svg+xml" href="./public/vms.svg">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            background: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .dispatch-box {
+            text-align: center;
+            background: rgba(30, 41, 59, 0.85);
+            padding: 32px 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+        .spinner {
+            width: 36px; height: 36px;
+            border: 3px solid rgba(37, 99, 235, 0.2);
+            border-top-color: #2563eb;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        a { color: #60a5fa; text-decoration: none; font-weight: 600; }
+    </style>
+    <script>
+        // SPA Route Dispatcher for GitHub Pages 404 handler
+        (function() {
+            var fullPath = window.location.pathname.toLowerCase();
+            var search = window.location.search || '';
+            var hash = window.location.hash || '';
+
+            // Extract segments to find target portal
+            var target = './public/index.html';
+
+            if (fullPath.includes('/admin/dashboard')) {
+                target = './public/Admins/dashboard.html';
+            } else if (fullPath.includes('/admin')) {
+                target = './public/Admins/index.html';
+            } else if (fullPath.includes('/deptadmin/dashboard')) {
+                target = './public/DeptAdmin/dashbaord.html';
+            } else if (fullPath.includes('/deptadmin')) {
+                target = './public/DeptAdmin/index.html';
+            } else if (fullPath.includes('/employee/dashboard')) {
+                target = './public/Employee/dashbaord.html';
+            } else if (fullPath.includes('/employee')) {
+                target = './public/Employee/index.html';
+            } else if (fullPath.includes('/security/dashboard')) {
+                target = './public/Security/dashboard.html';
+            } else if (fullPath.includes('/security')) {
+                target = './public/Security/index.html';
+            } else if (fullPath.includes('/visitor/dashboard')) {
+                target = './public/Visitor/dashbaord.html';
+            } else if (fullPath.includes('/visitor')) {
+                target = './public/Visitor/index.html';
+            }
+
+            window.location.replace(target + search + hash);
+        })();
+    </script>
+</head>
+<body>
+    <div class="dispatch-box">
+        <div class="spinner"></div>
+        <h3 style="margin:0 0 8px; font-weight:700;">VMS Smart Portal</h3>
+        <p style="font-size:13px; color:#94a3b8; margin:0;">Dispatching to requested portal page...</p>
+    </div>
+</body>
+</html>
