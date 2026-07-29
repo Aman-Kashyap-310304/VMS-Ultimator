@@ -453,7 +453,7 @@
             } else {
                 localStorage.setItem('securityToken', data.token);
                 saveSessionToIndexedDb(data.token, portalId);
-                window.location.href = '/security/dashboard';
+                window.location.href = '/Security/dashboard.html';
             }
         } else {
             showAlert('Login Failed', data.message);

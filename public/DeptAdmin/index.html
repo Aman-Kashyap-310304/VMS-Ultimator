@@ -392,7 +392,7 @@
         const data = await res.json();
         if (data.success) {
             localStorage.setItem('deptAdminToken', data.token);
-            window.location.href = '/deptadmin/dashboard';
+            window.location.href = '/DeptAdmin/dashboard.html';
         } else {
             showAlert('Login Failed', data.message || 'Invalid credentials.');
         }

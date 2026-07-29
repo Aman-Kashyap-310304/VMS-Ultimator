@@ -535,7 +535,7 @@
         const data = await res.json();
         if (data.success) {
             localStorage.setItem('visitorToken', data.token);
-            window.location.href = '/visitor/dashbaord.html';
+            window.location.href = '/Visitor/dashbaord.html';
         } else {
             showAlert('Login Failed', 'Login failed: ' + data.message);
         }

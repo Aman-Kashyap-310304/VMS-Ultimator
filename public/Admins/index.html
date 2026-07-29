@@ -298,7 +298,7 @@
         const data = await res.json();
         if (data.success) {
             localStorage.setItem('adminToken', data.token);
-            window.location.href = '/admin/dashboard';
+            window.location.href = '/Admins/dashboard.html';
         } else {
             showAlert('Login Error', data.message || 'Invalid credentials.');
         }
