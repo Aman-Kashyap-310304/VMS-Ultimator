@@ -371,6 +371,10 @@
     let localStream = null;
     let savedPhotoPath = '';
 
+    if (localStorage.getItem('deptAdminToken')) {
+        window.location.replace('/deptadmin/dashboard');
+    }
+
     function showAlert(title, body) {
         document.getElementById('modalTitle').innerText = title;
         document.getElementById('modalBody').innerText = body;
@@ -393,7 +397,7 @@
         const data = await res.json();
         if (data.success) {
             localStorage.setItem('deptAdminToken', data.token);
-            window.location.href = '/DeptAdmin/dashboard.html';
+            window.location.href = '/deptadmin/dashboard';
         } else {
             showAlert('Login Failed', data.message || 'Invalid credentials.');
         }

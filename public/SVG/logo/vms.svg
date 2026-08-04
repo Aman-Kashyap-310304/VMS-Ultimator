@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="vms-brand-toggle">
+  <style>
+    /* Advanced CSS embedded in the SVG. 
+      When the parent container (or the SVG itself) gets an 'is-collapsed' class, 
+      the icon visually transitions into a "expand" arrow state.
+    */
+    .vms-brand-toggle {
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .sidebar-panel {
+      transition: all 0.3s ease;
+    }
+    
+    .vms-v-mark {
+      stroke: #4F46E5; /* Indigo brand color - adjust to your VMS theme */
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+
+    /* Hover effect */
+    .vms-brand-toggle:hover .vms-v-mark {
+      transform: translateY(1px) scale(1.05);
+    }
+
+    /* Toggled/Collapsed State Animations */
+    .is-collapsed .sidebar-panel {
+      opacity: 0;
+      transform: translateX(-5px);
+    }
+    
+    .is-collapsed .vms-v-mark {
+      /* Transforms the 'V' into a right-pointing arrow for expansion */
+      d: path("M10 8 L14 12 L10 16"); 
+      stroke: currentColor;
+    }
+  </style>
+
+  <rect x="2" y="3" width="20" height="18" rx="3" class="ui-frame" />
+  
+  <g class="sidebar-panel">
+    <line x1="8" y1="3" x2="8" y2="21" class="sidebar-divider" />
+    <circle cx="5" cy="7" r="1" fill="currentColor" stroke="none" />
+    <circle cx="5" cy="12" r="1" fill="currentColor" stroke="none" />
+    <circle cx="5" cy="17" r="1" fill="currentColor" stroke="none" />
+  </g>
+
+  <path d="M12 10 L15 14 L18 10" class="vms-v-mark" stroke-width="2.5" />
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%">
+  <!-- Circular container for the logo, maintaining a consistent shape -->
+  <circle cx="64" cy="64" r="62" fill="#007BFF" stroke="#0056B3" stroke-width="4"/>
+
+  <!-- Visitor (User) minimal bust silhouette, welcoming and centered -->
+  <g transform="translate(64, 64)">
+    <circle cx="0" cy="-18" r="10" fill="#FFFFFF"/>
+    <path d="M20,16V8c0-11-9-20-20-20s-20,9-20,20v8H20z" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Access Portal (Dashboard) arch with an upward arrow integrated at the peak, representing login/entry -->
+  <g transform="translate(64, 40)" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-36,24A40,40 0 1,1 36,24"/>
+    <path d="M0-12V0 M-6-6 L0-12 6-6" fill="none" transform="translate(0, -18)"/>
+  </g>
+
+  <!-- Dynamic curves indicating welcome, entry flow, and activity at the base of the portal -->
+  <g transform="translate(64, 64)" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round">
+    <path d="M-30,22a4,4 0 0,0 60,0"/>
+    <path d="M-15,30a2,2 0 0,0 30,0" opacity="0.6"/>
+  </g>
+</svg>

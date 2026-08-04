@@ -267,6 +267,10 @@
 </div>
 
 <script>
+    if (localStorage.getItem('adminToken')) {
+        window.location.replace('/admin/dashboard');
+    }
+
     function showAlert(title, body) {
         document.getElementById('modalTitle').innerText = title;
         document.getElementById('modalBody').innerText = body;
@@ -299,7 +303,7 @@
         const data = await res.json();
         if (data.success) {
             localStorage.setItem('adminToken', data.token);
-            window.location.href = '/Admins/dashboard.html';
+            window.location.href = '/admin/dashboard';
         } else {
             showAlert('Login Error', data.message || 'Invalid credentials.');
         }

@@ -430,6 +430,10 @@
         store.put({ key: 'active_session', token, portalId, timestamp: Date.now() });
     }
 
+    if (localStorage.getItem('securityToken')) {
+        window.location.replace('/security/dashboard');
+    }
+
     async function submitLogin() {
         const portalId = document.getElementById('portalId').value;
         const password = document.getElementById('password').value;
@@ -454,7 +458,7 @@
             } else {
                 localStorage.setItem('securityToken', data.token);
                 saveSessionToIndexedDb(data.token, portalId);
-                window.location.href = '/Security/dashboard.html';
+                window.location.href = '/security/dashboard';
             }
         } else {
             showAlert('Login Failed', data.message);

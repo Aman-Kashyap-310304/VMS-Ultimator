@@ -573,7 +573,7 @@
 <script>
     const token = localStorage.getItem('visitorToken');
     if (!token) {
-        window.location.href = '/visitor/index.html';
+        window.location.href = '/visitor';
     }
 
     const savedTheme = localStorage.getItem('vmsTheme') || 'light';
@@ -855,7 +855,7 @@
 
     function logout() {
         localStorage.removeItem('visitorToken');
-        window.location.href = '/visitor/index.html';
+        window.location.href = '/visitor';
     }
 
     function deleteAccount() {

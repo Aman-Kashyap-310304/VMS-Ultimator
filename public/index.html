@@ -1,6 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+    (function checkHomepageSession() {
+        const adminToken = localStorage.getItem('adminToken');
+        const deptAdminToken = localStorage.getItem('deptAdminToken');
+        const employeeToken = localStorage.getItem('employeeToken');
+        const securityToken = localStorage.getItem('securityToken');
+        const visitorToken = localStorage.getItem('visitorToken');
+
+        if (adminToken) {
+            window.location.replace('/admin/dashboard');
+        } else if (deptAdminToken) {
+            window.location.replace('/deptadmin/dashboard');
+        } else if (employeeToken) {
+            window.location.replace('/employee/dashboard');
+        } else if (securityToken) {
+            window.location.replace('/security/dashboard');
+        } else if (visitorToken) {
+            window.location.replace('/visitor/dashboard');
+        } else {
+            window.location.replace('/visitor');
+        }
+    })();
+</script>
 <script src="/js/vms-backend-wakeup.js"></script>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

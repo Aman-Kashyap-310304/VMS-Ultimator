@@ -409,6 +409,10 @@
 </div>
 
 <script>
+    if (localStorage.getItem('visitorToken')) {
+        window.location.replace('/visitor/dashboard');
+    }
+
     let currentStep = 1;
 
     function showAlert(title, message) {
@@ -499,11 +503,12 @@
         formData.append('contact_number', document.getElementById('regContact').value);
         formData.append('identity_type', document.getElementById('regIdType').value);
         formData.append('identity_number', document.getElementById('regIdNumber').value);
-        formData.append('company_name', document.getElementById('regCompany').value);
         formData.append('designation', document.getElementById('regDesignation').value);
         formData.append('password', document.getElementById('regPassword').value);
         formData.append('otp', document.getElementById('regOtp').value);
-        formData.append('photo', document.getElementById('regPhoto').files[0]);
+        if (document.getElementById('regPhoto').files.length) {
+            formData.append('photo', document.getElementById('regPhoto').files[0]);
+        }
         if (document.getElementById('regIdProof').files.length) {
             formData.append('identityProof', document.getElementById('regIdProof').files[0]);
         }
@@ -517,7 +522,7 @@
             localStorage.setItem('visitorToken', data.token);
             showAlert('Welcome', 'Welcome! Your 8-Digit Visitor ID is: ' + data.visitorId);
             setTimeout(() => {
-                window.location.href = '/visitor/dashbaord.html';
+                window.location.href = '/visitor/dashboard';
             }, 3000);
         } else {
             showAlert('Registration Failed', 'Registration failed: ' + data.message);
@@ -536,7 +541,7 @@
         const data = await res.json();
         if (data.success) {
             localStorage.setItem('visitorToken', data.token);
-            window.location.href = '/Visitor/dashbaord.html';
+            window.location.href = '/visitor/dashboard';
         } else {
             showAlert('Login Failed', 'Login failed: ' + data.message);
         }

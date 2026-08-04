@@ -1,78 +1,22 @@
 /**
  * ============================================================
- * VMS Ultra Pro — Backend Auto-Wakeup & Cross-Domain API Bridge
+ * VMS Ultra Pro — Render Backend Auto-Wakeup
  * public/js/vms-backend-wakeup.js
  *
  * Features:
- * - Detects execution environment (Localhost vs Render vs GitHub Pages)
- * - Intercepts relative `/api/...` calls on GitHub Pages & redirects to Render Backend
- * - Fixes static portal navigation links on GitHub Pages
  * - Pings `/health` on page load to spin up Render free tier if sleeping
- * - Displays a sleek, non-intrusive toast while Render is waking up
+ * - Displays a sleek, non-intrusive toast while Render server is waking up
  * ============================================================
  */
 
 (function VMSBackendBridge() {
     'use strict';
 
-    const RENDER_BACKEND_URL = 'https://vms-ultimator.onrender.com';
-    const hostname = window.location.hostname;
-
-    // Is running locally or directly on Render backend?
-    const isSameHostBackend = hostname === 'localhost' ||
-                              hostname === '127.0.0.1' ||
-                              hostname.endsWith('onrender.com');
-
-    // Set global API base URL
-    window.VMS_API_BASE = isSameHostBackend ? '' : RENDER_BACKEND_URL;
-
-    // Intercept window.fetch to route `/api/...` to Render backend when hosted on GitHub Pages or external hosts
     const nativeFetch = window.fetch;
-    window.fetch = function(input, init) {
-        let url = input;
-        if (typeof input === 'string') {
-            if (input.startsWith('/api/')) {
-                url = window.VMS_API_BASE + input;
-            }
-        } else if (input instanceof Request) {
-            if (input.url.startsWith('/') && input.url.includes('/api/')) {
-                url = new Request(window.VMS_API_BASE + input.url, input);
-            }
-        }
-        return nativeFetch.call(this, url, init);
-    };
-
-    // Fix absolute links when hosted on GitHub Pages
-    function fixGitHubPagesLinks() {
-        if (isSameHostBackend) return; // On Render/localhost, Express routes handle /admin, /visitor, etc.
-
-        // Detect GitHub Pages repository base (e.g. /VMS-Ultimator)
-        const pathSegments = window.location.pathname.split('/').filter(Boolean);
-        const repoBase = pathSegments.length > 0 && !pathSegments[0].endsWith('.html') ? '/' + pathSegments[0] : '';
-
-        document.querySelectorAll('a[href]').forEach(a => {
-            const href = a.getAttribute('href');
-            if (!href) return;
-
-            if (href === '/admin' || href === '/admin/') a.setAttribute('href', repoBase + '/public/Admins/index.html');
-            else if (href === '/visitor' || href === '/visitor/') a.setAttribute('href', repoBase + '/public/Visitor/index.html');
-            else if (href === '/deptadmin' || href === '/deptadmin/') a.setAttribute('href', repoBase + '/public/DeptAdmin/index.html');
-            else if (href === '/employee' || href === '/employee/') a.setAttribute('href', repoBase + '/public/Employee/index.html');
-            else if (href === '/security' || href === '/security/') a.setAttribute('href', repoBase + '/public/Security/index.html');
-            else if (href === '/admin/dashboard') a.setAttribute('href', repoBase + '/public/Admins/dashboard.html');
-            else if (href === '/deptadmin/dashboard') a.setAttribute('href', repoBase + '/public/DeptAdmin/dashbaord.html');
-            else if (href === '/employee/dashboard') a.setAttribute('href', repoBase + '/public/Employee/dashbaord.html');
-            else if (href === '/security/dashboard') a.setAttribute('href', repoBase + '/public/Security/dashboard.html');
-            else if (href === '/visitor/dashboard') a.setAttribute('href', repoBase + '/public/Visitor/dashbaord.html');
-            else if (href === '/' || href === '/index.html') a.setAttribute('href', repoBase + '/public/index.html');
-        });
-    }
 
     // Wakeup signal for Render backend
     function wakeupRender() {
-        fixGitHubPagesLinks();
-
-        const healthEndpoint = (window.VMS_API_BASE || RENDER_BACKEND_URL) + '/health';
+        const healthEndpoint = '/health';
         let wakeupToast = null;
 
         // Show toast if server takes more than 1.2s to respond (Render sleeping)
@@ -84,8 +28,8 @@
                 <div style="display:flex;align-items:center;gap:10px;">
                     <div class="vms-spinner"></div>
                     <div>
-                        <div style="font-weight:700;font-size:13px;color:#fff;">Connecting to VMS Backend…</div>
-                        <div style="font-size:11px;color:rgba(255,255,255,0.85);">Spinning up Render cloud server</div>
+                        <div style="font-weight:700;font-size:13px;color:#fff;">Connecting to VMS Server…</div>
+                        <div style="font-size:11px;color:rgba(255,255,255,0.85);">Spinning up cloud backend</div>
                     </div>
                 </div>
             `;

@@ -21,8 +21,7 @@ app.use(cors({
         if (!origin) return callback(null, true);
         if (origin.includes('localhost') || 
             origin.includes('127.0.0.1') || 
-            origin.includes('onrender.com') || 
-            origin.includes('github.io')) {
+            origin.includes('onrender.com')) {
             return callback(null, true);
         }
         return callback(null, true); // Allow cross-domain frontend clients
@@ -57,6 +56,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // SVG Files
+app.use('/SVG', express.static(path.join(__dirname, 'SVG')));
 app.use('/svg', express.static(path.join(__dirname, 'SVG')));
 
 // ======================================================
@@ -118,6 +118,13 @@ app.get('/', (req, res) => {
 app.get('/visitor', (req, res) => {
     res.sendFile(
         path.join(__dirname, 'public', 'Visitor', 'index.html')
+    );
+});
+
+// Visitor Dashboard
+app.get('/visitor/dashboard', (req, res) => {
+    res.sendFile(
+        path.join(__dirname, 'public', 'Visitor', 'dashbaord.html')
     );
 });
 

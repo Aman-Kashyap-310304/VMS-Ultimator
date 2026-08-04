@@ -545,7 +545,7 @@
 <script>
     const token = localStorage.getItem('employeeToken');
     if (!token) {
-        window.location.href = '/employee/index.html';
+        window.location.href = '/employee';
     }
 
     // Apply saved theme preference on load
@@ -809,7 +809,7 @@
 
     function logout() {
         localStorage.removeItem('employeeToken');
-        window.location.href = '/employee/index.html';
+        window.location.href = '/employee';
     }
 
     // Initial load
