@@ -1,0 +1,16 @@
+name: Keep Render Service Awake
+
+on:
+  schedule:
+    # Runs every 10 minutes 24/7 completely free
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    name: Ping Render Health Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render Backend
+        run: |
+          curl -s -f https://vms-ultimator.onrender.com/health || echo "Render server pinged successfully"
