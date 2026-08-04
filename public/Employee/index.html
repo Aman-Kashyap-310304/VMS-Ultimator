@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/js/vms-session.js"></script>
 <script src="/js/vms-backend-wakeup.js"></script>
 
     <!-- SEO Meta Tags -->
@@ -174,6 +175,45 @@
         .portal-links a:hover, .portal-links a.active {
             background: var(--primary);
             color: #fff;
+        }
+
+        /* Responsive Media Queries */
+        @media (max-width: 680px) {
+            body {
+                padding: 12px 10px;
+                justify-content: flex-start;
+            }
+            .top-nav {
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 16px;
+                align-items: center;
+            }
+            .home-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 8px 14px;
+                font-size: 0.85rem;
+            }
+            .portal-links {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                padding: 6px 8px;
+                gap: 4px;
+            }
+            .portal-label {
+                display: none;
+            }
+            .portal-links a {
+                font-size: 0.775rem;
+                padding: 4px 8px;
+            }
+            .container {
+                padding: 24px 18px;
+                border-radius: 20px;
+                max-width: 100%;
+            }
         }
 
         .container {
@@ -510,8 +550,11 @@
         store.put({ key: 'active_session', token, portalId, timestamp: Date.now() });
     }
 
-    if (localStorage.getItem('employeeToken')) {
-        window.location.replace('/employee/dashboard');
+    if (window.VMSSession) {
+        const session = window.VMSSession.getActiveSession();
+        if (session && session.role === 'employee') {
+            window.location.replace('/employee/dashboard');
+        }
     }
 
     async function submitLogin() {
@@ -536,7 +579,11 @@
                 document.getElementById('loginBox').style.display = 'none';
                 document.getElementById('changePasswordBox').style.display = 'block';
             } else {
-                localStorage.setItem('employeeToken', data.token);
+                if (window.VMSSession) {
+                    await window.VMSSession.setSession('employee', data.token, portalId);
+                } else {
+                    localStorage.setItem('employeeToken', data.token);
+                }
                 saveSessionToIndexedDb(data.token, portalId);
                 window.location.href = '/employee/dashboard';
             }

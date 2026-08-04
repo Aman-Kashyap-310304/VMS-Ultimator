@@ -508,6 +508,39 @@ router.post('/api/public-action/reject', async (req, res) => {
     }
 });
 
+// POST: Alert Admin & DeptAdmin when user switches session on same browser/device
+router.post('/api/auth/session-switch-alert', async (req, res) => {
+    try {
+        const { previousRole, previousUser, newRole, newUser, userAgent } = req.body;
+        console.warn(`[SECURITY ALERT] Browser session override: ${previousRole} (${previousUser}) -> ${newRole} (${newUser})`);
+
+        // Send email alert to Admin
+        const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER || 'admin@vms.com';
+        await sendEmail({
+            to: adminEmail,
+            subject: '⚠️ Security Alert: Session Switch Detected on Same Device',
+            htmlContent: `
+                <div style="font-family: system-ui, sans-serif; padding: 20px; background: #fff3f3; border: 1px solid #f87171; border-radius: 12px;">
+                    <h3 style="color: #dc2626; margin-top: 0;">⚠️ VMS Cross-Session Switch Alert</h3>
+                    <p>An active browser session was automatically destroyed and replaced on the same client browser.</p>
+                    <ul>
+                        <li><strong>Destroyed Session Role:</strong> ${previousRole || 'Unknown'} (${previousUser || 'N/A'})</li>
+                        <li><strong>New Active Session Role:</strong> ${newRole || 'Unknown'} (${newUser || 'N/A'})</li>
+                        <li><strong>Browser / Client Agent:</strong> ${userAgent || req.headers['user-agent']}</li>
+                        <li><strong>Timestamp:</strong> ${new Date().toLocaleString()}</li>
+                    </ul>
+                    <p style="font-size: 0.85rem; color: #7f1d1d;">The previous user session token has been purged from local storage for security compliance.</p>
+                </div>
+            `
+        }).catch(err => console.error('Failed to send session alert email:', err.message));
+
+        return res.json({ success: true, message: 'Session switch alert logged & notified.' });
+    } catch (err) {
+        console.error('Session switch alert error:', err);
+        return res.json({ success: false, message: 'Failed to process alert' });
+    }
+});
+
 router.post('/api/ai/generate', require('../controllers/aiController').generateContent);
 
 module.exports = router;
