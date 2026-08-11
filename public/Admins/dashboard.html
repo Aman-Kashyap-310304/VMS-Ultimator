@@ -1329,8 +1329,13 @@
     }
 
      function logout() {
-        localStorage.removeItem('adminToken');
-        window.location.href = '/admin';
+        if (window.VMSSession) {
+            window.VMSSession.logout('/admin');
+        } else {
+            localStorage.removeItem('adminToken');
+            localStorage.removeItem('vms_session_meta');
+            window.location.href = '/admin';
+        }
     }
 
     async function loadPasswordRequests() {

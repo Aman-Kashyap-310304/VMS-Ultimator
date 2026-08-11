@@ -808,8 +808,13 @@
     }
 
     function logout() {
-        localStorage.removeItem('employeeToken');
-        window.location.href = '/employee';
+        if (window.VMSSession) {
+            window.VMSSession.logout('/employee');
+        } else {
+            localStorage.removeItem('employeeToken');
+            localStorage.removeItem('vms_session_meta');
+            window.location.href = '/employee';
+        }
     }
 
     // Initial load

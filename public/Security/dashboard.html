@@ -920,8 +920,13 @@
     }
 
     function logout() {
-        localStorage.removeItem('securityToken');
-        window.location.href = '/security';
+        if (window.VMSSession) {
+            window.VMSSession.logout('/security');
+        } else {
+            localStorage.removeItem('securityToken');
+            localStorage.removeItem('vms_session_meta');
+            window.location.href = '/security';
+        }
     }
 
     let html5QrcodeScanner = null;

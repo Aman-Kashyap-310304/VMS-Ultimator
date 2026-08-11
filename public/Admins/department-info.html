@@ -234,31 +234,50 @@
     const currentPath = window.location.pathname;
 
     if (currentPath.startsWith('/employee')) {
-        // Employee visiting
         token = employeeToken;
         apiUrl = `/api/employee/departments/${deptCode}/overview`;
         backUrl = '/employee/dashboard';
     } else if (currentPath.startsWith('/deptadmin')) {
-        // Dept Admin visiting
         token = deptAdminToken;
         apiUrl = `/api/deptadmin/departments/${deptCode}/overview`;
         backUrl = '/deptadmin/dashboard';
     } else {
-        // Admin visiting (default)
         token = adminToken;
         apiUrl = `/api/admin/departments/${deptCode}/overview`;
         backUrl = '/admin/dashboard';
     }
 
-    // Fallback: if the path-matched token is null, try to detect from any available token
+    // Fallback 1: check other standalone tokens
     if (!token) {
         if (adminToken) { token = adminToken; apiUrl = `/api/admin/departments/${deptCode}/overview`; backUrl = '/admin/dashboard'; }
         else if (deptAdminToken) { token = deptAdminToken; apiUrl = `/api/deptadmin/departments/${deptCode}/overview`; backUrl = '/deptadmin/dashboard'; }
         else if (employeeToken) { token = employeeToken; apiUrl = `/api/employee/departments/${deptCode}/overview`; backUrl = '/employee/dashboard'; }
     }
 
+    // Fallback 2: recover from VMSSession metadata (handles new session system)
+    if (!token && window.VMSSession) {
+        const sessionMeta = window.VMSSession.getActiveSession();
+        if (sessionMeta && sessionMeta.token) {
+            token = sessionMeta.token;
+            const role = sessionMeta.role;
+            if (role === 'employee') {
+                apiUrl = `/api/employee/departments/${deptCode}/overview`;
+                backUrl = '/employee/dashboard';
+            } else if (role === 'deptAdmin') {
+                apiUrl = `/api/deptadmin/departments/${deptCode}/overview`;
+                backUrl = '/deptadmin/dashboard';
+            } else {
+                apiUrl = `/api/admin/departments/${deptCode}/overview`;
+                backUrl = '/admin/dashboard';
+            }
+        }
+    }
+
     if (!token || !deptCode) {
-        window.location.href = '/';
+        // Redirect to matching portal login instead of generic '/'
+        if (currentPath.startsWith('/employee')) window.location.href = '/employee';
+        else if (currentPath.startsWith('/deptadmin')) window.location.href = '/deptadmin';
+        else window.location.href = '/admin';
     }
 
     document.getElementById('backBtn').href = backUrl;

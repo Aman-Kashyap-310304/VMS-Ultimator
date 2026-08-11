@@ -1103,8 +1103,13 @@
     }
 
     function logout() {
-        localStorage.removeItem('deptAdminToken');
-        window.location.href = '/deptadmin';
+        if (window.VMSSession) {
+            window.VMSSession.logout('/deptadmin');
+        } else {
+            localStorage.removeItem('deptAdminToken');
+            localStorage.removeItem('vms_session_meta');
+            window.location.href = '/deptadmin';
+        }
     }
 
     let departmentsPool = [];

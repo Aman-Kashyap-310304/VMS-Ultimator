@@ -854,8 +854,13 @@
     }
 
     function logout() {
-        localStorage.removeItem('visitorToken');
-        window.location.href = '/visitor';
+        if (window.VMSSession) {
+            window.VMSSession.logout('/visitor');
+        } else {
+            localStorage.removeItem('visitorToken');
+            localStorage.removeItem('vms_session_meta');
+            window.location.href = '/visitor';
+        }
     }
 
     function deleteAccount() {

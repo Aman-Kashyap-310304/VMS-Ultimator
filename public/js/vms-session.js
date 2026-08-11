@@ -6,7 +6,7 @@
  * Rules:
  * 1. Single active session allowed across all user types in one browser.
  * 2. Session valid for max 48 hours OR expires after 18 hours of consecutive discontinuity.
- * 3. Logging into another role destroys previous session and alerts Admin & DeptAdmin via email & Dashboard Alert tab.
+ * 3. Logging into another role destroys previous session and alerts Admin & DeptAdmin.
  * ============================================================
  */
 
@@ -94,24 +94,44 @@ window.VMSSession = (function() {
      * Update last active timestamp on user interaction
      */
     function touchSession() {
-        const meta = getActiveSession();
-        if (meta) {
+        try {
+            const rawMeta = localStorage.getItem('vms_session_meta');
+            if (!rawMeta) return;
+            const meta = JSON.parse(rawMeta);
             meta.lastActive = Date.now();
             localStorage.setItem('vms_session_meta', JSON.stringify(meta));
-        }
+        } catch(e) {}
     }
 
     /**
-     * Clear all session tokens from localStorage
+     * Clear ALL session tokens and metadata from localStorage.
+     * FIX: This now wipes every role token + vms_session_meta to prevent
+     * the stale session bug where only the individual role token was removed.
      */
     function clearAllSessions() {
-        Object.values(TOKEN_KEYS).forEach(key => localStorage.removeItem(key));
+        // Remove every known role token
+        Object.values(TOKEN_KEYS).forEach(key => {
+            localStorage.removeItem(key);
+        });
+        // Remove session metadata
         localStorage.removeItem('vms_session_meta');
+        // Remove any legacy keys
+        localStorage.removeItem('vms_active_role');
+        console.log('[VMSSession] All sessions cleared.');
+    }
+
+    /**
+     * Perform a full logout: clear all sessions then redirect to login URL.
+     * @param {string} loginUrl - The login page URL to redirect to
+     */
+    function logout(loginUrl) {
+        clearAllSessions();
+        window.location.href = loginUrl || '/';
     }
 
     /**
      * Set new session & destroy any existing session from another user type.
-     * If another session was active on the same browser, alert Admin & DeptAdmin via API/Mail.
+     * If another session was active on same browser, alert Admin & DeptAdmin.
      */
     async function setSession(newRole, token, userIdentifier) {
         const previousSession = getActiveSession();
@@ -119,9 +139,7 @@ window.VMSSession = (function() {
 
         // Check if a DIFFERENT session was active before in this browser
         if (previousSession && previousSession.role !== newRole) {
-            console.warn(`[VMSSession] Single session override detected! Previous: ${previousSession.role}, New: ${newRole}`);
-            
-            // Send Alert to Backend (Admin/DeptAdmin email & Dashboard Alert tab)
+            console.warn(`[VMSSession] Single session override! Previous: ${previousSession.role}, New: ${newRole}`);
             try {
                 fetch('/api/auth/session-switch-alert', {
                     method: 'POST',
@@ -129,7 +147,7 @@ window.VMSSession = (function() {
                     body: JSON.stringify({
                         previousRole: previousSession.role,
                         previousUser: previousSession.userIdentifier || previousSession.role,
-                        newRole: newRole,
+                        newRole,
                         newUser: userIdentifier || newRole,
                         userAgent: navigator.userAgent,
                         timestamp: new Date().toISOString()
@@ -140,7 +158,7 @@ window.VMSSession = (function() {
             }
         }
 
-        // Wipe all old tokens
+        // Wipe all old tokens first
         clearAllSessions();
 
         // Save new token & metadata
@@ -149,7 +167,7 @@ window.VMSSession = (function() {
 
         const newMeta = {
             role: newRole,
-            token: token,
+            token,
             loginTime: now,
             lastActive: now,
             userIdentifier: userIdentifier || newRole
@@ -165,8 +183,10 @@ window.VMSSession = (function() {
         getActiveSession,
         setSession,
         clearAllSessions,
+        logout,
         touchSession,
         DASHBOARD_URLS,
-        LOGIN_URLS
+        LOGIN_URLS,
+        TOKEN_KEYS
     };
 })();

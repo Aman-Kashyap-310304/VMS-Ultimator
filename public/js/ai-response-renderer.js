@@ -47,7 +47,7 @@
 
     /**
      * Parse inline markdown elements:
-     * bold, italic, strikethrough, inline code, links, VMS action tokens
+     * bold, italic, strikethrough, inline code, links, images, VMS action tokens
      */
     function parseInline(text) {
         // VMS Dynamic Action: [ACTION:Button Label:eventName]
@@ -57,10 +57,25 @@
                     </button>`;
         });
 
-        // VMS Navigation Button: [NAV:Button Label:url]
+        // VMS Image Token: [IMG:imageUrl:alt text] — renders inline user photo or system image
+        text = text.replace(/\[IMG:([^\]:]+):([^\]]+)\]/g, (_, imgUrl, altText) => {
+            const safeUrl = imgUrl.trim();
+            const safeAlt = escapeHtml(altText.trim());
+            // Only allow http/https URLs for images
+            if (!safeUrl.startsWith('http')) return '';
+            return `<div class="vms-ai-img-wrap">
+                        <img src="${safeUrl}" alt="${safeAlt}" class="vms-ai-img"
+                             onerror="this.style.display='none'" loading="lazy">
+                        <span class="vms-ai-img-caption">${safeAlt}</span>
+                    </div>`;
+        });
+
+        // VMS Navigation Button: [NAV:Button Label:url] — supports both absolute and relative paths
         text = text.replace(/\[NAV:([^\]|:]+):([^\]]+)\]/g, (_, label, url) => {
-            const safeUrl = url.trim().startsWith('http') ? url.trim() : '#';
-            return `<a class="vms-ai-nav-btn" href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener noreferrer">
+            const rawUrl = url.trim();
+            // Allow http/https absolute URLs AND relative paths starting with /
+            const safeUrl = (rawUrl.startsWith('http') || rawUrl.startsWith('/')) ? rawUrl : '#';
+            return `<a class="vms-ai-nav-btn" href="${escapeHtml(safeUrl)}" ${safeUrl.startsWith('http') ? 'target="_blank" rel="noopener noreferrer"' : ''}>
                         <i class="bi bi-arrow-up-right-circle-fill"></i> ${escapeHtml(label.trim())}
                     </a>`;
         });
@@ -89,10 +104,12 @@
         // Inline code: `code`
         text = text.replace(/`([^`]+)`/g, '<code class="vms-inline-code">$1</code>');
 
-        // Markdown links: [label](url)
+        // Markdown links: [label](url) — allow relative paths too
         text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, url) => {
-            const safeUrl = url.startsWith('http') ? url : '#';
-            return `<a href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener noreferrer" class="vms-ai-link">${escapeHtml(label)}</a>`;
+            const rawUrl = url.trim();
+            const safeUrl = (rawUrl.startsWith('http') || rawUrl.startsWith('/')) ? rawUrl : '#';
+            const isExternal = rawUrl.startsWith('http');
+            return `<a href="${escapeHtml(safeUrl)}" ${isExternal ? 'target="_blank" rel="noopener noreferrer"' : ''} class="vms-ai-link">${escapeHtml(label)}</a>`;
         });
 
         return text;
@@ -467,6 +484,21 @@
                 text-decoration: none; margin: 4px 4px 4px 0; transition: all 0.2s;
             }
             .vms-ai-nav-btn:hover { background: rgba(16,163,74,0.2); }
+
+            /* User Profile Image in AI Response */
+            .vms-ai-img-wrap {
+                display: inline-flex; flex-direction: column; align-items: center;
+                margin: 10px 0; gap: 6px;
+            }
+            .vms-ai-img {
+                width: 80px; height: 80px; border-radius: 50%;
+                object-fit: cover; border: 3px solid var(--primary, #2563eb);
+                box-shadow: 0 4px 14px rgba(37,99,235,0.3);
+            }
+            .vms-ai-img-caption {
+                font-size: 11px; color: var(--text, #64748b);
+                font-style: italic;
+            }
 
             /* Dark mode adjustments */
             [data-theme="dark"] .vms-ai-rendered { color: #e2e8f0; }
