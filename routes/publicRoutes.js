@@ -541,6 +541,4 @@ router.post('/api/auth/session-switch-alert', async (req, res) => {
     }
 });
 
-router.post('/api/ai/generate', require('../controllers/aiController').generateContent);
-
 module.exports = router;

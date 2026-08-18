@@ -73,11 +73,13 @@ app.use((req, res, next) => {
     console.log(`[HTTP] ${req.method} ${req.url}`);
     next();
 });
+// AI routes FIRST — before the '/' publicRoutes wildcard catchall
+app.use('/api/ai', require('./routes/aiRoutes'));
+
 app.use('/api/admin', adminRoutes);
 app.use('/api/visitor', visitorRoutes);
 app.use('/api/password-reset', require('./routes/passwordRequestRoutes'));
 app.use('/api/password_reset', require('./routes/passwordRequestRoutes'));
-app.use('/', require('./routes/publicRoutes'));
 app.use(
     '/api/security',
     require('./routes/securityAuthRoutes')
@@ -98,10 +100,9 @@ app.use(
     '/api/deptadmin',
     require('./routes/deptAdminRoutes')
 );
-app.use(
-    '/api/ai',
-    require('./routes/aiRoutes')
-);
+
+// Public routes LAST (mounted at '/' — acts as a partial catchall)
+app.use('/', require('./routes/publicRoutes'));
 
 // ======================================================
 // FRONTEND ROUTES
